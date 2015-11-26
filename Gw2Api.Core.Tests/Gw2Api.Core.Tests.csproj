@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetAccountCharacterNamesTests.cs" />
+    <Compile Include="GetCharacterInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\Gw2Api.Core\Gw2Api.Core.csproj">
       <Project>{2927206E-B9D6-4A0C-A069-93FD267C570E}</Project>
       <Name>Gw2Api.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShortStack.Core\ShortStack.Core.csproj">
+      <Project>{CF2781FA-D318-4914-BC5B-BEB66764F8D7}</Project>
+      <Name>ShortStack.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

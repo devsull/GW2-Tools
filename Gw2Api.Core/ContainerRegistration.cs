@@ -4,13 +4,13 @@
 
     using ShortStack.Core;
 
-    public class ContainerRegistration : IRegisterContainerObjects
+    public class ContainerRegistration : IConfigurationLoader
     {
-        public void Register()
+        public void Configure()
         {
             ShortStack.Container.RegisterSingleton<Settings>(() => new Settings());
             ShortStack.Container.RegisterSingleton<RestClient>(() => new RestClient());
-            ShortStack.Container.Register<GetAccountCharacterNames>();
+            ShortStack.Container.Register<GetCharacterNamesForAccount>();
         }
     }
 }

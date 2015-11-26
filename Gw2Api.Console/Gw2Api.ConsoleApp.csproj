@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.1.3.1\lib\net35-Client\NodaTime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SimpleInjector, Version=3.1.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.3.1.1\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>
@@ -55,13 +59,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ShortStack\ShortStack.Core\ShortStack.Core.csproj">
-      <Project>{B81404DA-5AC3-4DB7-8E46-41591DB9B5E0}</Project>
-      <Name>ShortStack.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Gw2Api.Core\Gw2Api.Core.csproj">
       <Project>{2927206E-B9D6-4A0C-A069-93FD267C570E}</Project>
       <Name>Gw2Api.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShortStack.Core\ShortStack.Core.csproj">
+      <Project>{CF2781FA-D318-4914-BC5B-BEB66764F8D7}</Project>
+      <Name>ShortStack.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
