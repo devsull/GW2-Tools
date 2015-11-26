@@ -23,8 +23,7 @@ namespace Gw2Api.ConsoleApp
             foreach (var name in response.Names)
             {
                 var info = getCharacterInformation.HandleRequest(name, key);
-                //var localDateTime = new LocalDateTime(info.Birthday)
-                //var birthday = new ZonedDateTime(info.Birthday, )
+                
                 Console.WriteLine("{0} was created on {1}", name, info.Birthday.Date);
             }
 
