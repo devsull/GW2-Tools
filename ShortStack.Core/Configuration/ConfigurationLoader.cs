@@ -18,13 +18,18 @@ namespace ShortStack.Core.Configuration
         public static void LoadConfigurations()
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblies)
+
+            // var selfAssembly =
+
+            var typesOfLoaders =
+                assemblies.SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Contains(typeof (IConfigurationLoader))));
+
+            var activatedTypesOfLoaders =
+                typesOfLoaders.Select(type => Activator.CreateInstance(type) as IConfigurationLoader);
+
+            foreach (var loader in activatedTypesOfLoaders)
             {
-                var types = assembly.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IConfigurationLoader)));
-                foreach (var instance in types.Select(type => Activator.CreateInstance(type) as IConfigurationLoader))
-                {
-                    instance?.Configure();
-                }
+                loader?.Configure();
             }
         }
     }
