@@ -1,5 +1,7 @@
 
 
+using System.Collections.Generic;
+
 namespace Gw2Api.Core.EndPoints.CharacterInformation
 {
     using System;
@@ -16,17 +18,13 @@ namespace Gw2Api.Core.EndPoints.CharacterInformation
         public GetCharacterInformation(Settings settings, RestClient restClient)
             : base(settings, restClient)
         {
-            this.ApiEndPoint = Gw2EndPoints.CharactersEndPoint;
+            this.ApiEndPoint = Gw2EndPoints.Characters;
         }
         
-        public CharacterInformation HandleRequest(string apiKey, string[] name)
+        public CharacterInformation HandleRequest(string apiKey, string name = null)
         {
-            if (name.Length > 1)
-            {
-                throw new InvalidOperationException("Cannot get multiple character names at a time yet...!");
-            }
-
-            this.ApiResources = name.ToList();
+            // add name to the resource list
+            this.ApiResources = new List<string> {name };
 
             var data = base.Execute(apiKey);
 

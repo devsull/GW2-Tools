@@ -57,6 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EndPoints\AccountBank\GetAccountBank.cs" />
+    <Compile Include="EndPoints\CharacterInventory\CharacterInventoryMappings.cs" />
     <Compile Include="EndPoints\CharacterInformation\GetCharacterInformation.cs" />
     <Compile Include="EndPoints\BaseGw2ApiEndPoint.cs" />
     <Compile Include="EndPoints\CharacterInformation\CharacterInformationMappings.cs" />
@@ -65,8 +67,11 @@
     <Compile Include="EndPoints\AccountCharacterNames\GetAccountCharacterNames.cs" />
     <Compile Include="EndPoints\AccountCharacterNames\GetCharacterNamesResponseMappings.cs" />
     <Compile Include="EndPoints\AccountCharacterNames\AccountCharacterNames.cs" />
+    <Compile Include="EndPoints\CharacterInventory\CharacterInventory.cs" />
+    <Compile Include="EndPoints\CharacterInventory\GetCharacterInventory.cs" />
     <Compile Include="EndPoints\Gw2EndPointResources.cs" />
     <Compile Include="EndPoints\Gw2EndPoints.cs" />
+    <Compile Include="GW2ApiRawObjects\Inventory.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryBag.cs" />
     <Compile Include="GW2ApiRawObjects\Character.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryItem.cs" />

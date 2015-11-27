@@ -2,6 +2,7 @@
 {
     public static class Gw2EndPointResources
     {
-        public static string InventoryResource = "inventory";
+        public static string Inventory = "inventory";
+        public static string Bank = "Bank";
     }
 }

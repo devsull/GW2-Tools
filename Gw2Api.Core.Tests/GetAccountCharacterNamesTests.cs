@@ -1,4 +1,6 @@
-﻿namespace Gw2Api.Core.Tests
+﻿using Gw2Api.Core.EndPoints.AccountCharacterNames;
+
+namespace Gw2Api.Core.Tests
 {
     using ShortStack.Core;
 

@@ -7,12 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Gw2Api.Core.EndPoints;
-using Gw2Api.Core.EndPoints.AccountCharacterNames;
-
-namespace Gw2Api.Core
+namespace Gw2Api.Core.EndPoints.AccountCharacterNames
 {
+    using System.Collections.Generic;
     using RestSharp;
 
     /// <summary>
@@ -23,10 +20,10 @@ namespace Gw2Api.Core
         public GetAccountCharacterNames(Settings settings, RestClient restClient)
             : base(settings, restClient)
         {
-            this.ApiEndPoint = "characters";
+            this.ApiEndPoint = Gw2EndPoints.Characters;
         }
 
-        public AccountCharacterNames HandleRequest(string apiKey, string[] resources = null)
+        public AccountCharacterNames HandleRequest(string apiKey, string resourceEndPoint = null)
         {
             var data = base.Execute(apiKey);
 
