@@ -25,14 +25,7 @@ namespace GW2Tools.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-
-
-            var angular2Bundle = new ScriptBundle("~/bundles/angular")
-                .Include("~/Scripts/angular2/system.js")
-                .Include("~/Scripts/angular2/typescript.js")
-                .Include("~/Scripts/angular2/angular.dev.js");
-
-            bundles.Add(angular2Bundle);
+            
         }
     }
 }
