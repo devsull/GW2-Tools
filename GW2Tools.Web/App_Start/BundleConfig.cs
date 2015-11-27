@@ -26,6 +26,11 @@ namespace GW2Tools.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             
+            var reactBundle = new ScriptBundle("~/bundles/reactjs").Include(
+                "~/scripts/react/react.js",
+                "~/scripts/react/react-dom.js");
+
+            bundles.Add(reactBundle);
         }
     }
 }
