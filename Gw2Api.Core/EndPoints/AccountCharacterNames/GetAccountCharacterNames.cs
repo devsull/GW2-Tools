@@ -9,6 +9,7 @@
 
 namespace Gw2Api.Core.EndPoints.AccountCharacterNames
 {
+    using ApiEndPointDefinitions;
     using System.Collections.Generic;
     using RestSharp;
 

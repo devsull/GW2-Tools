@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using Gw2Api.Core.GW2ApiRawObjects;
-using RestSharp;
-using ShortStack.Core;
-
+﻿
 namespace Gw2Api.Core.EndPoints.CharacterInventory
 {
+    using System.Collections.Generic;
+    using ApiEndPointDefinitions;
+    using GW2ApiRawObjects;
+    using RestSharp;
+    using ShortStack.Core;
+
     public class GetCharacterInventory : BaseGw2ApiEndPoint<Inventory>, IGw2ApiAuthEndPoint<CharacterInventory>
     {
         public GetCharacterInventory(Settings settings, RestClient restClient) : base(settings, restClient)

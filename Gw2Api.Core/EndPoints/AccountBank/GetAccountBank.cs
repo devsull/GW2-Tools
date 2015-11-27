@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Gw2Api.Core.ApiEndPointDefinitions;
 using Gw2Api.Core.GW2ApiRawObjects;
 using RestSharp;
 

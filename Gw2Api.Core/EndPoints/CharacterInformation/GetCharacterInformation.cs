@@ -1,11 +1,9 @@
 
-
-using System.Collections.Generic;
-
 namespace Gw2Api.Core.EndPoints.CharacterInformation
 {
-    using System;
-    using System.Linq;
+
+    using System.Collections.Generic;
+    using ApiEndPointDefinitions;
     using GW2ApiRawObjects;
     using RestSharp;
     using ShortStack.Core;

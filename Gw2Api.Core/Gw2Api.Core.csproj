@@ -69,8 +69,8 @@
     <Compile Include="EndPoints\AccountCharacterNames\AccountCharacterNames.cs" />
     <Compile Include="EndPoints\CharacterInventory\CharacterInventory.cs" />
     <Compile Include="EndPoints\CharacterInventory\GetCharacterInventory.cs" />
-    <Compile Include="EndPoints\Gw2EndPointResources.cs" />
-    <Compile Include="EndPoints\Gw2EndPoints.cs" />
+    <Compile Include="ApiEndPointDefinitions\Gw2EndPointResources.cs" />
+    <Compile Include="ApiEndPointDefinitions\Gw2EndPoints.cs" />
     <Compile Include="GW2ApiRawObjects\Inventory.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryBag.cs" />
     <Compile Include="GW2ApiRawObjects\Character.cs" />

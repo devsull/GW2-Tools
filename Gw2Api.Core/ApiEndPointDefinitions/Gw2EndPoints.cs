@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Gw2Api.Core.EndPoints
+﻿namespace Gw2Api.Core.ApiEndPointDefinitions
 {
     public static class Gw2EndPoints
     {
