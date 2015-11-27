@@ -10,7 +10,7 @@
         {
             ShortStack.Container.RegisterSingleton<Settings>(() => new Settings());
             ShortStack.Container.RegisterSingleton<RestClient>(() => new RestClient());
-            ShortStack.Container.Register<GetCharacterNamesForAccount>();
+            ShortStack.Container.Register<GetAccountCharacterNames>();
         }
     }
 }

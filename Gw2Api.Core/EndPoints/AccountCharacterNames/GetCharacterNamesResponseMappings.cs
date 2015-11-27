@@ -10,7 +10,7 @@ namespace Gw2Api.Core
         public void Configure()
         {
             // TODO: figure out how to do this....
-            //TinyMapper.Bind<List<string>, CharacterNamesForAccount>(config =>
+            //TinyMapper.Bind<List<string>, AccountCharacterNames>(config =>
             //{
             //    config.Bind();
             //    // config.Bind(source=> source, target=>target.Names);

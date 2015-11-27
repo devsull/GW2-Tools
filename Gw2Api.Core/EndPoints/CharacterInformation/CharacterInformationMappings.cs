@@ -1,11 +1,10 @@
-using System;
-using Gw2Api.Core.GW2ApiRawObjects;
-using Nelibur.ObjectMapper;
-using RestSharp;
-using ShortStack.Core;
 
-namespace Gw2Api.Core
+namespace Gw2Api.Core.EndPoints.CharacterInformation
 {
+    using GW2ApiRawObjects;
+    using Nelibur.ObjectMapper;
+    using ShortStack.Core;
+
     public class CharacterInformationMappings : IConfigurationLoader
     {
         public void Configure()

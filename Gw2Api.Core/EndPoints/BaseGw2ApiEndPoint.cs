@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using RestSharp;
 
-namespace Gw2Api.Core
+namespace Gw2Api.Core.EndPoints
 {
     public abstract class BaseGw2ApiEndPoint<T> where T : new()
     {
@@ -10,45 +11,49 @@ namespace Gw2Api.Core
 
         private readonly RestClient restClient;
 
-        private readonly string apiEndPoint;
+        protected string ApiEndPoint { get; set; }
+
+        protected List<string> ApiResources { get; set; } =  new List<string>();
         
-        protected BaseGw2ApiEndPoint(Settings settings, RestClient restClient, string endPoint)
+        protected BaseGw2ApiEndPoint(Settings settings, RestClient restClient)
         {
             this.settings = settings;
             this.restClient = restClient;
-            this.apiEndPoint = endPoint;
         }
 
-        protected T Execute(string apiKey = null, string[] resourceStrings = null)
+        protected T Execute(string apiKey = null)
         {
-            if (this.apiEndPoint == null)
+            if (this.ApiEndPoint == null)
             {
                 throw new InvalidOperationException("Api end point not specified in an implementation of BaseGw2ApiEndPoint");
             }
 
-            var endPointBuilder = new StringBuilder(this.apiEndPoint);
-
-            if (resourceStrings != null)
+            // start end point building
+            var endPointBuilder = new StringBuilder(this.ApiEndPoint);
+            
+            // append any resources to the end point
+            foreach (var resourceString in this.ApiResources)
             {
-                foreach (var resourceString in resourceStrings)
-                {
-                    endPointBuilder.Append("/").Append(resourceString);
-                }
+                endPointBuilder.Append("/").Append(resourceString);
             }
 
+            // create request with built api end point
             var request = new RestRequest(endPointBuilder.ToString());
 
+            // append access token if auth needed
             if (apiKey != null)
             {
                 request.AddParameter("access_token", apiKey);
             }
 
+            // configure client for api
             var builder = new StringBuilder(this.settings.ApiRootUrl).Append("/").Append(this.settings.ApiVersion);
-
             this.restClient.BaseUrl = new Uri(builder.ToString());
 
+            // execute request on client
             var response = this.restClient.Execute<T>(request);
             
+            // return the data in response
             return response.Data;
         }
     }

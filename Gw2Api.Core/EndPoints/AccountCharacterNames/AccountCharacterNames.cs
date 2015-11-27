@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Gw2Api.Core
+namespace Gw2Api.Core.EndPoints.AccountCharacterNames
 {
-    public class CharacterNamesForAccount
+    public class AccountCharacterNames
     {
         public List<string> Names { get; set; }
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Gw2Api.Core.EndPoints.AccountCharacterNames;
+using Gw2Api.Core.EndPoints.CharacterInformation;
 using ShortStack.Core;
 using Xunit;
 
