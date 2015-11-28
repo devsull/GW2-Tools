@@ -19,37 +19,55 @@ var ApiKeyForm = React.createClass({
         );
     }
 });
-/*
 
-                <label for="api-key">GW2 Api Key</label>
-                <input type="text" name="api-key" id="api-key" />
-*/
 var InputField = React.createClass({
-   render: function () {
-       var buttonText = this.props.button;
-       if(buttonText != null) {
-           button = <InputFieldButton type="primary">{buttonText}</InputFieldButton>
-       }
-       return (
-           <div className="input-group">
-                <span className="input-group-addon" id={this.props.id}>
-                    {this.props.children}
+    // handling inputs
+    componentDidMount: function() {
+        $(document.body).on('keydown', this.onEnter);
+    },
+    componentWillUnmount: function() {
+        $(document.body).off('keydown', this.onEnter);
+    },
+    getInitialState: function() {
+        return { value: '' };
+    },
+    handleChange: function(event) {
+        this.setState({value: event.target.value});
+    },
+    onEnter: function(event) {
+        if( event.keyCode == 13 ) {
+            doStuff(event.target.value)
+        }
+    },
+    render: function () {
+        var buttonText = this.props.button;
+        if(buttonText != null) {
+            button = <InputFieldButton type="primary" onClick={()=>doStuff(this.state.value)}>{buttonText}</InputFieldButton>
+        }
+        var { id, type, placeholder, children, ...other } = this.props;
+        return (
+            <div className="input-group">
+                <span className="input-group-addon" id={id}>
+                    {children}
                 </span>
-                <input type={this.props.type} className="form-control" placeholder={this.props.placeholder} aria-describedby={this.props.id} />
+                <input type={type} className="form-control" placeholder={placeholder} aria-describedby={id} onChange={this.handleChange} />
                 {button}
-           </div>
-       );
-   } 
+            </div>
+        );
+    } 
 });
+
+function doStuff(apikey) {
+    console.log("you entered:", apikey);
+}
 
 var InputFieldButton = React.createClass({
     render: function () {
-        var buttonType = this.props.type != null ? this.props.type : "primary";
-        
-        var classes = "btn btn-" + buttonType;
+        var { type, children, ...other } = this.props;
+        var classes = "btn btn-" + type;
         return (
             <span className="input-group-btn">
-                <button className={classes} type>
+                <button className={classes} {...other}>
                     {this.props.children}
                 </button>
             </span>
