@@ -1,14 +1,12 @@
 ﻿@{
-    ViewBag.Title = "GW2 Tools";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
-
-<gw2-tools>Gw2 Tools cannot load, yet.</gw2-tools>
+<div id="tools">
+    Gw2 Tools cannot load, yet.
+</div>
 
 @section scripts {
-<script>
-// TODO boot up this stuff
+<script type="text/javascript" src="~/Scripts/app/gw2Tools.jsx">
 </script>
 }
