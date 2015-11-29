@@ -7,7 +7,7 @@ namespace Gw2Api.Core.EndPoints.CharacterInformation
     {
         public string Name { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; }
 
         public string Race { get; set; }
 
@@ -18,7 +18,8 @@ namespace Gw2Api.Core.EndPoints.CharacterInformation
             get
             {
                 var today = DateTime.Today;
-                var next = new DateTime(today.Year, Birthday.Month, Birthday.Day);
+                var bday = DateTime.Parse(Birthday);
+                var next = new DateTime(today.Year, bday.Month, bday.Day);
 
                 if (next < today)
                 {

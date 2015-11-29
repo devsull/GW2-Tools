@@ -81,8 +81,7 @@ var CharacterBirthdays = React.createClass({
         var payload = { apiKey: apiKey };
         console.log("birthdays has ", apiKey, payload)
         $.get('/Tools/Birthdays', payload, (result) => {
-            //var data = JSON.parse(result);
-            console.log("got data", result);//, data);
+            console.log("got data", result);
             this.setState({ data: result });
         }.bind(this)); 
     },

@@ -21,9 +21,9 @@ namespace GW2Tools.Web.Controllers
         {
             var birthdays = getCharacterBirthdays.GetBirthdays(apiKey);
 
-            var json = Json(birthdays, JsonRequestBehavior.AllowGet);
-
-            return json;
+            var jsonResult = Json(birthdays, JsonRequestBehavior.AllowGet);
+            
+            return jsonResult;
         }
     }
 }
