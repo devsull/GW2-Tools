@@ -5,7 +5,7 @@ using RestSharp;
 
 namespace Gw2Api.Core.EndPoints.AccountBank
 {
-    public class GetAccountBank : BaseGw2ApiEndPoint<List<InventoryItem>>, IGw2ApiAuthEndPoint<List<InventoryItem>>
+    public class GetAccountBank : BaseGw2ApiEndPoint<List<InventoryItem>>, IGw2ApiAuthEndPoint<AccountBank>
     {
         public GetAccountBank(Settings settings, RestClient restClient) : base(settings, restClient)
         {
@@ -13,13 +13,11 @@ namespace Gw2Api.Core.EndPoints.AccountBank
             this.ApiResources = new List<string> { Gw2EndPointResources.Bank };
         }
 
-        public List<InventoryItem> HandleRequest(string apiKey, string resourceEndPoint = null)
+        public AccountBank HandleRequest(string apiKey, string resourceEndPoint = null)
         {
             var data = base.Execute(apiKey);
             
-            // maybe map this to something better...?
-
-            return  data;
+            return new AccountBank { Items = data };
         }
     }
 }

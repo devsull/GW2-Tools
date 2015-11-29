@@ -18,9 +18,7 @@ namespace ShortStack.Core.Configuration
         public static void LoadConfigurations()
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            // var selfAssembly =
-
+            
             var typesOfLoaders =
                 assemblies.SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Contains(typeof (IConfigurationLoader))));
 

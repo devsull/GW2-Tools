@@ -1,4 +1,6 @@
-﻿namespace ShortStack.Core
+﻿using SimpleInjector.Advanced;
+
+namespace ShortStack.Core
 {
     public static class Locator
     {
@@ -7,7 +9,4 @@
             return ShortStack.Container.GetInstance<T>();
         }
     }
-}
-namespace ShortStack.Core
-{
 }
