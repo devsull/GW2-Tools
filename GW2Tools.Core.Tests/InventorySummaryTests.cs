@@ -20,7 +20,7 @@
         public InventorySummaryTests(ITestOutputHelper output)
         {
             ShortStack.BootStack(false);
-            ContainerRegistration.Configure();
+            Gw2CoreContainerRegistration.Configure();
             var mappingConfig = new Gw2Api.Core.ObjectMappings();
             mappingConfig.Configure();
             var thisMappingConfig = new ObjectMappings();

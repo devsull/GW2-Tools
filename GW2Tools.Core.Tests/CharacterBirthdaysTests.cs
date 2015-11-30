@@ -19,7 +19,7 @@
         public CharacterBirthdaysTests(ITestOutputHelper output)
         {
             ShortStack.BootStack(false);
-            ContainerRegistration.Configure();
+            Gw2CoreContainerRegistration.Configure();
             var mappingConfig = new Gw2Api.Core.ObjectMappings();
             mappingConfig.Configure();
             this.SystemUnderTest = Locator.GetInstance<ICharacterBirthdays>();

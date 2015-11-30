@@ -1,10 +1,12 @@
 ﻿var Gw2Tools = React.createClass({
     getInitialState: function() {
         return {
-            loading: false,
+            loading: 0,
             apiKeyInput: null,
             apiKeyIsValid: false, 
-            birthdayData: []
+            birthdayData: [],
+            accountInventory: [],
+            filterItemName: null
         };
     },
     
@@ -34,12 +36,27 @@
     
     getBirthdays: function () {
         if(this.state.apiKeyIsValid) {
+            this.state.loading++;
+            
+            this.setState({ birthdayData: [] });
             var payload = { apiKey: this.state.apiKeyInput };
-            this.setState({ loading: true });
             $.get('/Tools/Birthdays', payload, (result) => {
-                console.log("got data", result);
-                this.setState({ birthdayData: result, loading: false });
-            }.bind(this));
+                loading = this.state.loading - 1;
+                this.setState({ birthdayData: result, loading: loading });
+            });
+        }
+    },
+    
+    getAccountInventory: function () {
+        if(this.state.apiKeyIsValid) {
+            this.state.loading++;
+            
+            this.setState({ birthdayData: [] });
+            var payload = { apiKey: this.state.apiKeyInput };
+            $.get('/Tools/AccountInventory', payload, (result) => {
+                loading = this.state.loading - 1;
+                this.setState({ accountInventory: result, loading: loading });
+            });
         }
     },
     
@@ -51,25 +68,41 @@
         });  
     },
     
+    apiKeySubmit: function () {
+        this.getBirthdays();
+        this.getAccountInventory();
+    },
+    
+    setItemFilter: function (filter) {
+        this.setState({filterItemName: filter})
+    },
+    
     render: function () {
+        var accountInventory = null;
         var birthdayTable = null;
         var loading = null;
         if(this.state.birthdayData.length > 0) {
-            console.log("make table", this.state);
             birthdayTable = <BirthdayTable birthdays={this.state.birthdayData} />
         }
-        if(this.state.loading) {
+        if(this.state.accountInventory.length > 0) {
+            accountInventory = 
+                <AccountInventory
+                    inventory={this.state.accountInventory}
+                    filterItemName={this.state.filterItemName}
+                    onUserInput={this.setItemFilter} />
+        }
+        if(this.state.loading > 0) {
             loading = <LoadingIndicator />
         }
-        console.log("birthdayTable:", birthdayTable)
         return (
             <div className="gw2-tools">
                 <ApiKeyForm 
                     apiKeyInput={this.state.apiKeyInput}
                     onUserInput={this.handleUserInput}
-                    onSubmit={this.getBirthdays}
+                    onSubmit={this.apiKeySubmit}
                 />
                 {loading}
+                {accountInventory}
                 {birthdayTable}
             </div>
         );
@@ -83,6 +116,89 @@ var LoadingIndicator = React.createClass({
                 <h1>Loading...</h1>
             </div>
         ); 
+    }
+});
+
+var AccountInventoryRow = React.createClass({
+   render: function () {
+       return (
+           <tr>
+                <td>{this.props.quantity}</td>
+                <td>
+                    <img className="small-icon" src={this.props.iconUrl} />
+                    {this.props.name}
+                </td>
+           </tr>
+       )
+   }
+});
+
+var AccountInventory = React.createClass({
+   render: function () {
+        console.log(" AccountInventory got props", this.props)
+        var filteredItemRows = [];
+        var max = 30;
+        var nameFilter = this.props.filterItemName;
+        this.props.inventory.forEach(function(item) {
+        console.log("inside loop", nameFilter)
+            if(((nameFilter != null && nameFilter != '') && item.Name.indexOf(nameFilter) === -1) || filteredItemRows.length >= max) {
+                return;
+            }
+            filteredItemRows.push(
+                <AccountInventoryRow key={item.Id} name={item.Name} quantity={item.Quantity} iconUrl={item.IconUrl} />
+            );
+        });
+        return (
+           <div>
+                <h3>Account Inventory Summary</h3>
+                <AccountInventoryFilter
+                    filterItemName={this.props.filterItemName}
+                    onUserInput={this.props.onUserInput} />
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredItemRows}
+                    </tbody>
+                </table>
+           </div>
+       );
+   }
+});
+
+var AccountInventoryFilter = React.createClass({
+    handleChange: function() {
+        this.props.onUserInput(this.refs.filterItemName.value);
+    },
+    
+    handleSubmit: function(event) {
+        event.preventDefault();
+    },
+    
+    render: function() {
+        console.log("got this far", this.props)
+        return (
+            <form ref="form" className="item-filter-form" onSubmit={this.handleSubmit}>
+                <div className="input-group">
+                    <span className="input-group-addon" id="filter-name-label">
+                        Search
+                    </span>
+                    <input 
+                        value={this.props.filterItemName}
+                        ref="filterItemName" 
+                        className="form-control" id="filter-name" 
+                        placeholder="Search by item name" 
+                        type="text"
+                        onChange={this.handleChange}
+                        aria-describedby="filter-name-label"
+                    />                       
+                </div>
+            </form>
+        );
     }
 });
 
@@ -133,6 +249,7 @@ var ApiKeyForm = React.createClass({
     },
     
     handleSubmit: function (event) {
+        console.log("handlesubmit", event);
         this.props.onSubmit(this.refs.apiKeyInput.value);
         event.preventDefault();
     },
@@ -160,112 +277,6 @@ var ApiKeyForm = React.createClass({
         );
     }
 });
-
-// var InputField = React.createClass({
-//     // // handling inputs
-//     // componentDidMount: function() {
-//     //     $(document.body).on('keydown', this.onEnter);
-//     // },
-//     // componentWillUnmount: function() {
-//     //     $(document.body).off('keydown', this.onEnter);
-//     // },
-//     // getInitialState: function() {
-//     //     return { value: '' };
-//     // },
-//     // handleChange: function() {
-//     //     this.setState({value: event.target.value});
-//     // },
-//     // onEnter: function(event) {
-//     //     if( event.keyCode == 13 ) {
-//     //         DisplayAccount(event.target.value)
-//     //     }
-//     // },
-//     render: function () {
-//         var buttonText = this.props.button;
-//         if(buttonText != null) {
-//             button = <InputFieldButton type="primary" onClick={()=>DisplayAccount(this.state.value)}>{buttonText}</InputFieldButton>
-//         }
-//         var { id, type, placeholder, children, ...other } = this.props;
-//         return (
-// 
-//         );
-//     } 
-// });
-// 
-// var InputFieldButton = React.createClass({
-//     render: function () {
-//         var { type, children, ...other } = this.props;
-//         var classes = "btn btn-" + type;
-//         return (
-//             <span className="input-group-btn">
-//                 <button className={classes} {...other}>
-//                     {this.props.children}
-//                 </button>
-//             </span>
-//         );       
-//     }
-// });
-// 
-// var CharacterBirthdays = React.createClass({
-//     getInitialState: function() {
-//         var empty = {data:[]};
-//         return empty;
-//     },
-//     componentDidMount: function() {
-//         var apiKey = this.props.apiKey;
-//         var payload = { apiKey: apiKey };
-//         console.log("birthdays has ", apiKey, payload)
-//         $.get('/Tools/Birthdays', payload, (result) => {
-//             console.log("got data", result);
-//             this.setState({ data: result });
-//         }.bind(this)); 
-//     },
-//     render: function() {
-//         var birthdays = null;
-//         if(this.state.data != []) {   
-//             birthdays = this.state.data.map(function(character) {
-//                 return (
-//                     <CharacterBirthday key={character.Name} name={character.Name} birthday={character.Birthday} daysToBirthday={character.DaysUntilBirthday} />
-//                 )
-//             });
-//         };
-//         return (
-//             <div className="birthdays">
-//                 {birthdays}
-//             </div>
-//         );
-//     }
-// });
-// 
-// var CharacterBirthday = React.createClass({
-//     render: function() {
-//         return (
-//             <div className="row">
-//                 <div className='col-md-3'>
-//                     Name: {this.props.name}
-//                 </div>
-//                 <div className='col-md-3'>
-//                     Created: {this.props.birthday}
-//                 </div>
-//                 <div className='col-md-3'>
-//                     Days Until: {this.props.daysToBirthday}
-//                 </div>
-//                 <div className='col-md-3'>
-//                 </div>
-//             </div>
-//         );
-//     }
-// });
-// 
-// function DisplayAccount(apikey) {
-//     console.log("attempting apikey:", apikey);
-//     var characterBirthdays = <CharacterBirthdays apiKey={apikey} />
-//     console.log("atetmpting to make", characterBirthdays)
-//     ReactDOM.render(
-//         characterBirthdays,
-//         document.getElementById('birthdays')
-//     );
-// }
 
 ReactDOM.render(
     <Gw2Tools />,

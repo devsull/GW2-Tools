@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Birthdays\CharacterBirthdays.cs" />
     <Compile Include="ContainerRegistration.cs" />
+    <Compile Include="Gw2CoreContainerRegistration.cs" />
     <Compile Include="Birthdays\ICharacterBirthdays.cs" />
     <Compile Include="InventorySummary\IInventorySummary.cs" />
     <Compile Include="InventorySummary\InventorySummary.cs" />
