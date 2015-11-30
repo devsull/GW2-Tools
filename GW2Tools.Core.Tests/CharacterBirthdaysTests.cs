@@ -23,7 +23,7 @@
 
             foreach (var character in characters)
             {
-                Assert.NotEqual(default(DateTime), character.Birthday);
+                Assert.NotNull(character.Birthday);
                 Assert.NotNull(character.Name);
                 Assert.NotNull(character.Race);
                 Assert.NotNull(character.Profession);
