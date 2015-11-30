@@ -13,13 +13,16 @@ namespace ShortStack.Core
 
         private static object bootLock = new object();
 
-        public static void BootStack()
+        public static void BootStack(bool loadDiscovery = true)
         {
             lock (bootLock)
             {
                 if (!booted)
                 {
-                    ConfigurationLoader.LoadConfigurations();
+                    if (loadDiscovery)
+                    {
+                        ConfigurationLoader.LoadConfigurations();
+                    }
                     booted = true;
                 }
             }

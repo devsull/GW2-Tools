@@ -7,6 +7,8 @@ using GW2Tools.Core;
 
 namespace GW2Tools.Web.Controllers
 {
+    using GW2Tools.Core.Birthdays;
+
     public class ToolsController : Controller
     {
         private readonly ICharacterBirthdays getCharacterBirthdays;

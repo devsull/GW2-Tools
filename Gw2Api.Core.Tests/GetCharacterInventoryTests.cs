@@ -24,7 +24,7 @@ namespace Gw2Api.Core.Tests
         }
 
         [Fact]
-        public void GetCharacterInformationWorks()
+        public void GetCharacterInventoryWorks()
         {
             var info = this.SystemUnderTest.HandleRequest(this.testKey, this.characterName);
             

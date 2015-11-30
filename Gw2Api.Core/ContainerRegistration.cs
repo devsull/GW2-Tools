@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using Gw2Api.Core.EndPoints;
-using Gw2Api.Core.EndPoints.AccountBank;
-using Gw2Api.Core.EndPoints.AccountCharacterNames;
-using Gw2Api.Core.EndPoints.CharacterInformation;
-using Gw2Api.Core.EndPoints.CharacterInventory;
-using Gw2Api.Core.GW2ApiRawObjects;
-
-namespace Gw2Api.Core
+﻿namespace Gw2Api.Core
 {
+    using System.Collections.Generic;
+
+    using EndPoints;
+    using EndPoints.AccountBank;
+    using EndPoints.AccountCharacterNames;
+    using EndPoints.CharacterInformation;
+    using EndPoints.CharacterInventory;
+    using EndPoints.Items;
+
     using RestSharp;
 
     using ShortStack.Core;
@@ -22,6 +23,9 @@ namespace Gw2Api.Core
             ShortStack.Container.Register<IGw2ApiAuthEndPoint<AccountCharacterNames>, GetAccountCharacterNames>();
             ShortStack.Container.Register<IGw2ApiAuthEndPoint<CharacterInformation>, GetCharacterInformation>();
             ShortStack.Container.Register<IGw2ApiAuthEndPoint<CharacterInventory>, GetCharacterInventory>();
+            ShortStack.Container.Register<IGw2ApiAuthEndPoint<AccountBankMaterials>, GetAccountBankMaterials>();
+
+            ShortStack.Container.Register<IGw2ApiEndPoint<List<ItemDescription>>, GetItemDescriptions>();
         }
     }
 }

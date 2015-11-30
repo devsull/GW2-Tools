@@ -1,18 +1,28 @@
 ﻿namespace GW2Tools.Core.Tests
 {
+    using GW2Tools.Core.Birthdays;
+
     using Newtonsoft.Json;
-    using System;
+
+    using ShortStack.Core;
+
     using Xunit;
     using Xunit.Abstractions;
-    using ShortStack.Core.Testing;
 
-    public class CharacterBirthdaysTests : BaseIntegrationTest<ICharacterBirthdays>
+    public class CharacterBirthdaysTests
     {
+        public ICharacterBirthdays SystemUnderTest { get; }
+
         private readonly ITestOutputHelper output;
         private readonly string testKey = "C10D3218-A187-F34F-A93E-0543601C299846C8C6FB-7FAC-492E-B89D-35E1669B0214";
 
         public CharacterBirthdaysTests(ITestOutputHelper output)
         {
+            ShortStack.BootStack(false);
+            ContainerRegistration.Configure();
+            var mappingConfig = new Gw2Api.Core.ObjectMappings();
+            mappingConfig.Configure();
+            this.SystemUnderTest = Locator.GetInstance<ICharacterBirthdays>();
             this.output = output;
         }
 

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace GW2Tools.Core
+﻿namespace GW2Tools.Core.Birthdays
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Gw2Api.Core.EndPoints;
     using Gw2Api.Core.EndPoints.AccountCharacterNames;
-    using Gw2Api.Core.EndPoints.CharacterInformation; 
+    using Gw2Api.Core.EndPoints.CharacterInformation;
 
     public class CharacterBirthdays : ICharacterBirthdays
     {
@@ -26,7 +26,7 @@ namespace GW2Tools.Core
             var response = new List<CharacterInformation>();
             foreach (var name in characters.Names)
             {
-                var chararacter = getCharacterInformationEndPoint.HandleRequest(apiKey, name);
+                var chararacter = this.getCharacterInformationEndPoint.HandleRequest(apiKey, name);
                 response.Add(chararacter);
             }
 

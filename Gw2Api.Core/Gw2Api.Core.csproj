@@ -57,26 +57,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EndPoints\AccountBankMaterials\AccountBankMaterials.cs" />
+    <Compile Include="EndPoints\AccountBankMaterials\GetAccountBankMaterials.cs" />
     <Compile Include="EndPoints\AccountBank\AccountBank.cs" />
     <Compile Include="EndPoints\AccountBank\GetAccountBank.cs" />
-    <Compile Include="EndPoints\CharacterInventory\CharacterInventoryMappings.cs" />
     <Compile Include="EndPoints\CharacterInformation\GetCharacterInformation.cs" />
     <Compile Include="EndPoints\BaseGw2ApiEndPoint.cs" />
-    <Compile Include="EndPoints\CharacterInformation\CharacterInformationMappings.cs" />
     <Compile Include="EndPoints\CharacterInformation\CharacterInformation.cs" />
     <Compile Include="ContainerRegistration.cs" />
     <Compile Include="EndPoints\AccountCharacterNames\GetAccountCharacterNames.cs" />
-    <Compile Include="EndPoints\AccountCharacterNames\GetCharacterNamesResponseMappings.cs" />
     <Compile Include="EndPoints\AccountCharacterNames\AccountCharacterNames.cs" />
     <Compile Include="EndPoints\CharacterInventory\CharacterInventory.cs" />
     <Compile Include="EndPoints\CharacterInventory\GetCharacterInventory.cs" />
     <Compile Include="ApiEndPointDefinitions\Gw2EndPointResources.cs" />
     <Compile Include="ApiEndPointDefinitions\Gw2EndPoints.cs" />
+    <Compile Include="EndPoints\IGw2ApiEndPoint.cs" />
+    <Compile Include="EndPoints\Items\GetItemDescriptions.cs" />
+    <Compile Include="EndPoints\Items\ItemDescription.cs" />
+    <Compile Include="GW2ApiRawObjects\MaterialBankItem.cs" />
     <Compile Include="GW2ApiRawObjects\Inventory.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryBag.cs" />
     <Compile Include="GW2ApiRawObjects\Character.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryItem.cs" />
     <Compile Include="EndPoints\IGw2ApiAuthEndPoint.cs" />
+    <Compile Include="GW2ApiRawObjects\Item.cs" />
+    <Compile Include="ObjectMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

@@ -6,6 +6,7 @@ namespace Gw2Api.ConsoleApp
     using System;
     using ShortStack.Core;
     using GW2Tools.Core;
+    using GW2Tools.Core.Birthdays;
 
     class Program
     {

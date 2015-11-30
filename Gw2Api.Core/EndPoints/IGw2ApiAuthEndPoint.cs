@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Gw2Api.Core.EndPoints
+﻿namespace Gw2Api.Core.EndPoints
 {
     public interface IGw2ApiAuthEndPoint<T> where T : new()
     {

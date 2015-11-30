@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InventoryItem.cs" company="Devin Sullivan">
-//   DMS
+// <copyright file="Item.cs" company="DMS">
+//   copy write
 // </copyright>
 // <summary>
-//   The inventory item.
+//   The item.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Gw2Api.Core.GW2ApiRawObjects
 {
     /// <summary>
-    /// The inventory item.
+    /// The item.
     /// </summary>
-    public class InventoryItem
+    public class Item
     {
         /// <summary>
         /// Gets or sets the id.
@@ -20,19 +20,18 @@ namespace Gw2Api.Core.GW2ApiRawObjects
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the count.
+        /// Gets or sets the name.
         /// </summary>
-        public int Count { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the binding.
+        /// Gets or sets the rarity.
         /// </summary>
-        public string Binding { get; set; }
+        public string Rarity { get; set; }
 
         /// <summary>
-        /// Gets or sets the bound_ to.
+        /// Gets or sets the icon.
         /// </summary>
-        // ReSharper disable once InconsistentNaming
-        public string Bound_To { get; set; }
+        public string Icon { get; set; }
     }
 }

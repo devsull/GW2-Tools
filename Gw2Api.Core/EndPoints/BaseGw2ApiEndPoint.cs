@@ -13,6 +13,8 @@ namespace Gw2Api.Core.EndPoints
 
         protected string ApiEndPoint { get; set; }
 
+        protected Dictionary<string, List<string>> ApiQueryParams { get; set; } = new Dictionary<string, List<string>>();
+
         protected List<string> ApiResources { get; set; } =  new List<string>();
         
         protected BaseGw2ApiEndPoint(Settings settings, RestClient restClient)
@@ -20,7 +22,7 @@ namespace Gw2Api.Core.EndPoints
             this.settings = settings;
             this.restClient = restClient;
         }
-
+        
         protected T Execute(string apiKey = null)
         {
             if (this.ApiEndPoint == null)
@@ -44,6 +46,12 @@ namespace Gw2Api.Core.EndPoints
             if (apiKey != null)
             {
                 request.AddParameter("access_token", apiKey);
+            }
+
+            foreach (var apiQueryParam in this.ApiQueryParams)
+            {
+                var values = string.Join(",", apiQueryParam.Value);
+                request.AddParameter(apiQueryParam.Key, values);
             }
 
             // configure client for api

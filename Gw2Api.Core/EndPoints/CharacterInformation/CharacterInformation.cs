@@ -17,15 +17,20 @@ namespace Gw2Api.Core.EndPoints.CharacterInformation
         {
             get
             {
+                if (string.IsNullOrEmpty(this.Birthday))
+                {
+                    return -1;
+                }
+
                 var today = DateTime.Today;
-                var bday = DateTime.Parse(Birthday);
+                var bday = DateTime.Parse(this.Birthday);
                 var next = new DateTime(today.Year, bday.Month, bday.Day);
 
                 if (next < today)
                 {
                     next = next.AddYears(1);
                 }
-                
+
                 return (next - today).Days;
             }
         }
