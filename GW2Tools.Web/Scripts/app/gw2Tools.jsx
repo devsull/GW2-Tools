@@ -135,12 +135,10 @@ var AccountInventoryRow = React.createClass({
 
 var AccountInventory = React.createClass({
    render: function () {
-        console.log(" AccountInventory got props", this.props)
         var filteredItemRows = [];
         var max = 30;
         var nameFilter = this.props.filterItemName;
         this.props.inventory.forEach(function(item) {
-        console.log("inside loop", nameFilter)
             if(((nameFilter != null && nameFilter != '') && item.Name.indexOf(nameFilter) === -1) || filteredItemRows.length >= max) {
                 return;
             }
@@ -177,10 +175,10 @@ var AccountInventoryFilter = React.createClass({
     
     handleSubmit: function(event) {
         event.preventDefault();
+        return false;
     },
     
     render: function() {
-        console.log("got this far", this.props)
         return (
             <form ref="form" className="item-filter-form" onSubmit={this.handleSubmit}>
                 <div className="input-group">
