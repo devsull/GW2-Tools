@@ -36,13 +36,13 @@ var InputField = React.createClass({
     },
     onEnter: function(event) {
         if( event.keyCode == 13 ) {
-            doStuff(event.target.value)
+            DisplayAccount(event.target.value)
         }
     },
     render: function () {
         var buttonText = this.props.button;
         if(buttonText != null) {
-            button = <InputFieldButton type="primary" onClick={()=>doStuff(this.state.value)}>{buttonText}</InputFieldButton>
+            button = <InputFieldButton type="primary" onClick={()=>DisplayAccount(this.state.value)}>{buttonText}</InputFieldButton>
         }
         var { id, type, placeholder, children, ...other } = this.props;
         return (
@@ -57,10 +57,6 @@ var InputField = React.createClass({
     } 
 });
 
-function doStuff(apikey) {
-    console.log("you entered:", apikey);
-}
-
 var InputFieldButton = React.createClass({
     render: function () {
         var { type, children, ...other } = this.props;
@@ -74,6 +70,67 @@ var InputFieldButton = React.createClass({
         );       
     }
 });
+
+var CharacterBirthdays = React.createClass({
+    getInitialState: function() {
+        var empty = {data:[]};
+        return empty;
+    },
+    componentDidMount: function() {
+        var apiKey = this.props.apiKey;
+        var payload = { apiKey: apiKey };
+        console.log("birthdays has ", apiKey, payload)
+        $.get('/Tools/Birthdays', payload, (result) => {
+            console.log("got data", result);
+            this.setState({ data: result });
+        }.bind(this)); 
+    },
+    render: function() {
+        var birthdays = null;
+        if(this.state.data != []) {   
+            birthdays = this.state.data.map(function(character) {
+                return (
+                    <CharacterBirthday key={character.Name} name={character.Name} birthday={character.Birthday} daysToBirthday={character.DaysUntilBirthday} />
+                )
+            });
+        };
+        return (
+            <div className="birthdays">
+                {birthdays}
+            </div>
+        );
+    }
+});
+
+var CharacterBirthday = React.createClass({
+    render: function() {
+        return (
+            <div className="row">
+                <div className='col-md-3'>
+                    Name: {this.props.name}
+                </div>
+                <div className='col-md-3'>
+                    Created: {this.props.birthday}
+                </div>
+                <div className='col-md-3'>
+                    Days Until: {this.props.daysToBirthday}
+                </div>
+                <div className='col-md-3'>
+                </div>
+            </div>
+        );
+    }
+});
+
+function DisplayAccount(apikey) {
+    console.log("attempting apikey:", apikey);
+    var characterBirthdays = <CharacterBirthdays apiKey={apikey} />
+    console.log("atetmpting to make", characterBirthdays)
+    ReactDOM.render(
+        characterBirthdays,
+        document.getElementById('birthdays')
+    );
+}
 
 ReactDOM.render(
     <Gw2Tools />,

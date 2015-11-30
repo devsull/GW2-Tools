@@ -1,4 +1,6 @@
-﻿using ShortStack.Core.Configuration;
+﻿using System;
+using System.Reflection;
+using ShortStack.Core.Configuration;
 using SimpleInjector;
 
 namespace ShortStack.Core

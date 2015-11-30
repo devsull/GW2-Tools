@@ -1,20 +1,18 @@
 ﻿
-
-using Gw2Api.Core.EndPoints.CharacterInventory;
-using Newtonsoft.Json;
-using Xunit.Abstractions;
+using Gw2Api.Core.EndPoints;
+using ShortStack.Core.Testing;
 
 namespace Gw2Api.Core.Tests
 {
-    using System;
-    using EndPoints.CharacterInformation;
+    using EndPoints.CharacterInventory;
+    using Newtonsoft.Json;
+    using Xunit.Abstractions;
     using ShortStack.Core;
     using Xunit;
 
-    public class GetCharacterInventoryTests
+    public class GetCharacterInventoryTests : BaseIntegrationTest<IGw2ApiAuthEndPoint<CharacterInventory>>
     {
         private readonly ITestOutputHelper output;
-        private GetCharacterInventory SystemUnderTest;
 
         private readonly string testKey = "C10D3218-A187-F34F-A93E-0543601C299846C8C6FB-7FAC-492E-B89D-35E1669B0214";
 
@@ -23,8 +21,6 @@ namespace Gw2Api.Core.Tests
         public GetCharacterInventoryTests(ITestOutputHelper output)
         {
             this.output = output;
-            ShortStack.BootStack();
-            this.SystemUnderTest = Locator.GetInstance<GetCharacterInventory>();
         }
 
         [Fact]

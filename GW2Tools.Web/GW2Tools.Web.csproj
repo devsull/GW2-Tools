@@ -98,6 +98,18 @@
       <HintPath>..\packages\React.Web.Mvc4.2.1.1\lib\net40\React.Web.Mvc4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SimpleInjector, Version=3.1.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.1.1\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=3.1.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.3.1.1\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=3.1.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.3.1.1\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -144,6 +156,10 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="VroomJs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
       <HintPath>..\packages\React.Core.2.1.1\lib\net40\VroomJs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebActivator, Version=1.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
@@ -226,7 +242,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,12 +253,27 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Tools\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\app\gw2Tools.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gw2Api.Core\Gw2Api.Core.csproj">
+      <Project>{2927206e-b9d6-4a0c-a069-93fd267c570e}</Project>
+      <Name>Gw2Api.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GW2Tools.Core\GW2Tools.Core.csproj">
+      <Project>{C317D299-1FF8-47CE-9BF3-39765292C986}</Project>
+      <Name>GW2Tools.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShortStack.Core\ShortStack.Core.csproj">
+      <Project>{CF2781FA-D318-4914-BC5B-BEB66764F8D7}</Project>
+      <Name>ShortStack.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
