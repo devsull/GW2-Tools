@@ -1,7 +1,7 @@
 # GW2-Tools
-Get useful information from the GW2 API
+Get useful information from the GW2 API using GW2Tools!
 
-## Tools:
+## Working Tools:
 - Account wide search for items
 - Character birthday report
 
