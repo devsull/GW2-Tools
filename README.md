@@ -1,10 +1,13 @@
 # GW2-Tools
 Get useful information from the GW2 API
 
+Tools:
+	1. Account wide search for items
+	2. Character birthday report
+
 TODO:
-* Create Web Front End
 * Organize Code
 * Ability to save API Keys
+* Optimize API round trips with async calls
 * Features:
-	* Character Birthdays
-	* Account Wide Item Search
+	* Add equipped to item search
