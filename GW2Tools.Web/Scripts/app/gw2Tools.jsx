@@ -119,18 +119,63 @@ var LoadingIndicator = React.createClass({
     }
 });
 
-var AccountInventoryRow = React.createClass({
-   render: function () {
-       return (
-           <tr>
-                <td>{this.props.quantity}</td>
+var LocationInfo = React.createClass({    
+    render: function() {
+        var locRows = [];
+        var i = 0;
+        this.props.locationList.forEach(function(locDatum) {
+            i++;
+            var row = (<LocationRow key={i} 
+                    locationType={locDatum.LocationType} 
+                    locationDesc={locDatum.LocationDescription} 
+                    quantity={locDatum.Quantity} />);
+            locRows.push(row);
+        });
+        var locationListId = this.props.itemId + "-location-list";
+        var dataToggleId = "#" + locationListId;
+        return (
+            <div className="location-list">
+                <div className="pull-right">
+                    <button className="btn btn-info" data-target={dataToggleId} data-toggle="collapse">
+                        Show Locations
+                    </button>
+                </div>
+                <div id={locationListId} className="collapse">
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {locRows}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
+    } 
+});
+
+var LocationRow = React.createClass({
+    render: function() {
+        var locDesc = "";
+        if(this.props.locationDesc != null) {
+            locDesc = "(" + this.props.locationDesc + ")";
+        }
+        return (
+            <tr>
                 <td>
-                    <img className="small-icon" src={this.props.iconUrl} />
-                    {this.props.name}
+                    {this.props.locationType}
+                    {locDesc}
                 </td>
-           </tr>
-       )
-   }
+                <td>
+                    {this.props.quantity}
+                </td>
+            </tr>
+        )
+    }
 });
 
 var AccountInventory = React.createClass({
@@ -139,13 +184,23 @@ var AccountInventory = React.createClass({
         var max = 30;
         var nameFilter = this.props.filterItemName;
         this.props.inventory.forEach(function(item) {
-            if(((nameFilter != null && nameFilter != '') && item.Name.indexOf(nameFilter) === -1) || filteredItemRows.length >= max) {
+            if(((nameFilter != null && nameFilter != '') 
+                    && item.Name.toLowerCase().indexOf(nameFilter.toLowerCase()) === -1) 
+                || filteredItemRows.length >= max) {
                 return;
             }
             filteredItemRows.push(
-                <AccountInventoryRow key={item.Id} name={item.Name} quantity={item.Quantity} iconUrl={item.IconUrl} />
+                <AccountInventoryRow key={item.Id}
+                    itemId={item.Id}
+                    name={item.Name} 
+                    quantity={item.Quantity} 
+                    rarity={item.Rarity} 
+                    iconUrl={item.IconUrl} 
+                    locationList={item.LocationList} 
+                />
             );
         });
+        console.log("heres some filtered rows", filteredItemRows)
         return (
            <div>
                 <h3>Account Inventory Summary</h3>
@@ -155,8 +210,8 @@ var AccountInventory = React.createClass({
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Quantity</th>
-                            <th>Name</th>
+                            <th className="col-md-2">Quantity</th>
+                            <th className="col-md-10">Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,6 +220,24 @@ var AccountInventory = React.createClass({
                 </table>
            </div>
        );
+   }
+});
+
+var AccountInventoryRow = React.createClass({
+   render: function () {
+       var classList = "small-icon " + this.props.rarity.toLowerCase();
+       return (
+           <tr>
+                <td>{this.props.quantity}</td>
+                <td className="item">
+                    <img className={classList} src={this.props.iconUrl} />
+                    {this.props.name}
+                    <div className="pull-right">
+                        <LocationInfo itemId={this.props.itemId} locationList={this.props.locationList} />
+                    </div>
+                </td>
+           </tr>
+       )
    }
 });
 
@@ -202,7 +275,6 @@ var AccountInventoryFilter = React.createClass({
 
 var BirthdayTable = React.createClass({
     render: function() {
-        console.log("this", this, "got props", this.props)
         var birthdayRows = [];
         this.props.birthdays.forEach(function(character) {
             birthdayRows.push(
@@ -247,7 +319,6 @@ var ApiKeyForm = React.createClass({
     },
     
     handleSubmit: function (event) {
-        console.log("handlesubmit", event);
         this.props.onSubmit(this.refs.apiKeyInput.value);
         event.preventDefault();
     },

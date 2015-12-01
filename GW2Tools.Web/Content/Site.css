@@ -12,3 +12,35 @@
 .small-icon {
     height: 24px;
 }
+
+.item img {
+    border: 3px solid;
+}
+
+.item img.junk {
+    border-color: #AAA;
+}
+
+.item img.fine {
+    border-color: #62A4DA;
+}
+
+.item img.masterwork {
+    border-color: #1a9306;
+}
+
+.item img.rare {
+    border-color: #fcd00b;
+}
+
+.item img.exotic {
+    border-color: #ffa405;
+}
+
+.item img.ascended {
+    border-color: #fb3e8d;
+}
+
+.item img.legendary {
+    border-color: #4C139D;
+}
