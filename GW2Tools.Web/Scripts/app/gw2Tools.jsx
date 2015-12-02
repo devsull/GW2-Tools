@@ -48,16 +48,16 @@
     },
     
     getAccountInventory: function () {
-        // if(this.state.apiKeyIsValid) {
-        //     this.state.loading++;
-        //     
-        //     this.setState({ birthdayData: [] });
-        //     var payload = { apiKey: this.state.apiKeyInput };
-        //     $.get('/Tools/AccountInventory', payload, (result) => {
-        //         loading = this.state.loading - 1;
-        //         this.setState({ accountInventory: result, loading: loading });
-        //     });
-        // }
+        if(this.state.apiKeyIsValid) {
+            this.state.loading++;
+            
+            this.setState({ birthdayData: [] });
+            var payload = { apiKey: this.state.apiKeyInput };
+            $.get('/Tools/AccountInventory', payload, (result) => {
+                loading = this.state.loading - 1;
+                this.setState({ accountInventory: result, loading: loading });
+            });
+        }
     },
     
     handleUserInput: function (apiKeyInput) {
