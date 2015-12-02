@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -53,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Birthdays\CharacterBirthdays.cs" />
+    <Compile Include="Birthdays\GetBirthdaysCommand.cs" />
+    <Compile Include="Birthdays\GetBirthdaysRequest.cs" />
+    <Compile Include="GW2AuthApiRequest.cs" />
     <Compile Include="ContainerRegistration.cs" />
     <Compile Include="Gw2CoreContainerRegistration.cs" />
     <Compile Include="Birthdays\ICharacterBirthdays.cs" />
@@ -63,6 +70,8 @@
     <Compile Include="Objects\LocationType.cs" />
     <Compile Include="ObjectMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\GetBirthdaysRequestValidator.cs" />
+    <Compile Include="Validators\Gw2AuthApiRequestValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gw2Api.Core\Gw2Api.Core.csproj">

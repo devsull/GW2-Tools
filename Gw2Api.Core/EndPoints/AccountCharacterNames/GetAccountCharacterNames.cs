@@ -27,12 +27,8 @@ namespace Gw2Api.Core.EndPoints.AccountCharacterNames
         public AccountCharacterNames HandleRequest(string apiKey, string resourceEndPoint = null)
         {
             var data = base.Execute(apiKey);
-
-            // var mapped = Mapper.Map<List<string>, AccountCharacterNames>(data);
-
+            
             return new AccountCharacterNames { Names = data };
-
-            // return mapped;
         }
     }
 }
