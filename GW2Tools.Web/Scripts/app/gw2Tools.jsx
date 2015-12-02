@@ -1,4 +1,6 @@
-﻿var Gw2Tools = React.createClass({
+﻿// Gw2Tools holds the state of the application - everything propigates/renders down from Gw2Tools
+var Gw2Tools = React.createClass({
+    // sets the initial state of Gw2Tools component
     getInitialState: function() {
         return {
             loading: 0,
@@ -10,14 +12,17 @@
         };
     },
     
+    // validates if an api key looks correct
     validateApiKey: (apiKeyInput) => {
         var validLength = 72;
+        var validTokenCount = 9;
+        
         if (apiKeyInput.length != validLength) {
             return false;
         }
         
         var tokens = apiKeyInput.split("-");
-        if (tokens.length != 9) {
+        if (tokens.length != validTokenCount) {
             return false;
         }
         
@@ -82,9 +87,11 @@
         var birthdayTable = null;
         var loading = null;
         if(this.state.birthdayData.length > 0) {
+            // render birthday table
             birthdayTable = <BirthdayTable birthdays={this.state.birthdayData} />
         }
         if(this.state.accountInventory.length > 0) {
+            // render account inventory
             accountInventory = 
                 <AccountInventory
                     inventory={this.state.accountInventory}
@@ -92,6 +99,7 @@
                     onUserInput={this.setItemFilter} />
         }
         if(this.state.loading > 0) {
+            // show loading indictor
             loading = <LoadingIndicator />
         }
         return (
@@ -119,6 +127,42 @@ var LoadingIndicator = React.createClass({
     }
 });
 
+var ApiKeyForm = React.createClass({
+    handleChange: function() {
+        this.props.onUserInput(this.refs.apiKeyInput.value);
+    },
+    
+    handleSubmit: function (event) {
+        this.props.onSubmit(this.refs.apiKeyInput.value);
+        event.preventDefault();
+    },
+    
+    render: function () {
+        return (
+            <form ref="form" className="api-key-form" onSubmit={this.handleSubmit}>
+                <div className="input-group">
+                    <label style={{display: "none"}} htmlFor="api-key">GW2 Api Key</label>
+                    <input 
+                        value={this.props.apiKeyInput}
+                        ref="apiKeyInput" 
+                        className="form-control" id="api-key" 
+                        placeholder="Enter GW2 API Key" 
+                        type="text"
+                        onChange={this.handleChange}
+                    />
+                    <span className="input-group-btn">
+                        <button className="btn btn-primary" type="submit">
+                            Enter
+                        </button>
+                    </span>                        
+                </div>
+            </form>  
+        );
+    }
+});
+
+// LocationInfo component shows where an item exists for a character
+// table hidden behind a button click
 var LocationInfo = React.createClass({    
     render: function() {
         var locRows = [];
@@ -158,6 +202,7 @@ var LocationInfo = React.createClass({
     } 
 });
 
+// a row in LocationInfo table
 var LocationRow = React.createClass({
     render: function() {
         var locDesc = "";
@@ -178,11 +223,13 @@ var LocationRow = React.createClass({
     }
 });
 
+// display account inventory with search filter
 var AccountInventory = React.createClass({
    render: function () {
         var filteredItemRows = [];
         var max = 30;
         var nameFilter = this.props.filterItemName;
+        // filter down the items and only show a max
         this.props.inventory.forEach(function(item) {
             if(((nameFilter != null && nameFilter != '') 
                     && item.Name.toLowerCase().indexOf(nameFilter.toLowerCase()) === -1) 
@@ -200,7 +247,6 @@ var AccountInventory = React.createClass({
                 />
             );
         });
-        console.log("heres some filtered rows", filteredItemRows)
         return (
            <div>
                 <h3>Account Inventory Summary</h3>
@@ -223,6 +269,7 @@ var AccountInventory = React.createClass({
    }
 });
 
+// row for account inventory table
 var AccountInventoryRow = React.createClass({
    render: function () {
        var classList = "small-icon " + this.props.rarity.toLowerCase();
@@ -241,6 +288,7 @@ var AccountInventoryRow = React.createClass({
    }
 });
 
+// search bar for account inventory 
 var AccountInventoryFilter = React.createClass({
     handleChange: function() {
         this.props.onUserInput(this.refs.filterItemName.value);
@@ -273,6 +321,7 @@ var AccountInventoryFilter = React.createClass({
     }
 });
 
+// Character's birthday table
 var BirthdayTable = React.createClass({
     render: function() {
         var birthdayRows = [];
@@ -301,6 +350,7 @@ var BirthdayTable = React.createClass({
     }
 });
 
+// a row in the birthday table
 var BirthdayRow = React.createClass({
     render: function() {
         return (
@@ -313,40 +363,7 @@ var BirthdayRow = React.createClass({
     }
 });
 
-var ApiKeyForm = React.createClass({
-    handleChange: function() {
-        this.props.onUserInput(this.refs.apiKeyInput.value);
-    },
-    
-    handleSubmit: function (event) {
-        this.props.onSubmit(this.refs.apiKeyInput.value);
-        event.preventDefault();
-    },
-    
-    render: function () {
-        return (
-            <form ref="form" className="api-key-form" onSubmit={this.handleSubmit}>
-                <div className="input-group">
-                    <label style={{display: "none"}} htmlFor="api-key">GW2 Api Key</label>
-                    <input 
-                        value={this.props.apiKeyInput}
-                        ref="apiKeyInput" 
-                        className="form-control" id="api-key" 
-                        placeholder="Enter GW2 API Key" 
-                        type="text"
-                        onChange={this.handleChange}
-                    />
-                    <span className="input-group-btn">
-                        <button className="btn btn-primary" type="submit">
-                            Enter
-                        </button>
-                    </span>                        
-                </div>
-            </form>  
-        );
-    }
-});
-
+// render the parent component on the page
 ReactDOM.render(
     <Gw2Tools />,
     document.getElementById('tools')

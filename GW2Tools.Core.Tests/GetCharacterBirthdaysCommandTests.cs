@@ -4,6 +4,8 @@
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
 
+    using Birthdays;
+
     using Newtonsoft.Json;
 
     using ShortStack.Core.Commands;

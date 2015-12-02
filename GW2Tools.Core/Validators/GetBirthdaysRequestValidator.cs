@@ -9,6 +9,8 @@
 
 namespace GW2Tools.Core.Validators
 {
+    using Birthdays;
+
     using FluentValidation;
 
     using ShortStack.Core.Validation;

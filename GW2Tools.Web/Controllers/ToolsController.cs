@@ -17,12 +17,11 @@ namespace GW2Tools.Web.Controllers
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
 
-    using GW2Tools.Core;
-
     using ShortStack.Core.Commands;
 
     /// <summary>
     /// The tools controller.
+    /// TODO: Implement a way to handle errors gracefully when calls into GW2Tools.Core fail
     /// </summary>
     public class ToolsController : Controller
     {
@@ -39,11 +38,11 @@ namespace GW2Tools.Web.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolsController"/> class.
         /// </summary>
-        /// <param name="getCharacterBirthdays">
-        /// The get character birthdays.
-        /// </param>
         /// <param name="getInventorySummary">
         /// The get inventory summary.
+        /// </param>
+        /// <param name="getBirthdaysCommand">
+        /// The get Birthdays Command.
         /// </param>
         public ToolsController(IInventorySummary getInventorySummary, BaseCommand<GetBirthdaysRequest, List<CharacterInformation>> getBirthdaysCommand)
         {

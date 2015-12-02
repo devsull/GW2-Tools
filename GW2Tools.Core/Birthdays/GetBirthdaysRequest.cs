@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace GW2Tools.Core
+namespace GW2Tools.Core.Birthdays
 {
     /// <summary>
     /// The get birthdays request.
