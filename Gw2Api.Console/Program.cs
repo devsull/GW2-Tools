@@ -25,22 +25,5 @@ namespace Gw2Api.ConsoleApp
             Console.WriteLine(json);
             Console.ReadLine();
         }
-
-        //private static void displayBirthdays(string key)
-        //{
-        //    var getCharacterNamesForAccount = ShortStack.Container.GetInstance<GetAccountCharacterNames>();
-        //    var getCharacterInformation = ShortStack.Container.GetInstance<GetCharacterInformation>();
-
-        //    var response = getCharacterNamesForAccount.HandleRequest(key);
-
-        //    foreach (var name in response.Names)
-        //    {
-        //        var info = getCharacterInformation.HandleRequest(name, key);
-
-        //        var json = JsonConvert.SerializeObject(info);
-
-        //        Console.WriteLine(json);
-        //    }
-        //}
     }
 }

@@ -12,7 +12,7 @@ namespace GW2Tools.Core
         {
             var registerApi = new Gw2Api.Core.ContainerRegistration();
             registerApi.Configure();
-            ShortStack.Container.Register<ICharacterBirthdays, CharacterBirthdays>();
+
             ShortStack.Container.Register<IInventorySummary, InventorySummary.InventorySummary>();
         }
     }

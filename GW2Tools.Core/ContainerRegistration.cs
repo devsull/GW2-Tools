@@ -27,8 +27,7 @@ namespace GW2Tools.Core
 
             // commands
             ShortStack.Container.Register<BaseCommand<GetBirthdaysRequest, List<CharacterInformation>>, GetBirthdaysCommand>();
-
-            ShortStack.Container.Register<ICharacterBirthdays, CharacterBirthdays>();
+            
             ShortStack.Container.Register<IInventorySummary, InventorySummary.InventorySummary>();
         }
     }

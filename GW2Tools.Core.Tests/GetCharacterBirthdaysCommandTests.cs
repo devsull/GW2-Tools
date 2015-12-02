@@ -4,6 +4,8 @@
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
 
+    using Newtonsoft.Json;
+
     using ShortStack.Core.Commands;
     using ShortStack.Core.Testing;
 
@@ -31,6 +33,18 @@
             Assert.NotEmpty(response.Result);
 
             this.output.WriteLine($"Command completed in {response.ExecutionTime}ms");
+
+            foreach (var character in response.Result)
+            {
+                Assert.NotNull(character.Birthday);
+                Assert.NotNull(character.Name);
+                Assert.NotNull(character.Race);
+                Assert.NotNull(character.Profession);
+            }
+
+            var json = JsonConvert.SerializeObject(response.Result);
+
+            this.output.WriteLine("Json: {0}", json);
         }
     }
 }

@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="GetCharacterBirthdaysCommandTests.cs" />
     <Compile Include="InventorySummaryTests.cs" />
-    <Compile Include="CharacterBirthdaysTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationTests\Gw2AuthApiRequestValidationTests.cs" />
   </ItemGroup>

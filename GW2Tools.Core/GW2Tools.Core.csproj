@@ -56,13 +56,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Birthdays\CharacterBirthdays.cs" />
     <Compile Include="Birthdays\GetBirthdaysCommand.cs" />
     <Compile Include="Birthdays\GetBirthdaysRequest.cs" />
     <Compile Include="GW2AuthApiRequest.cs" />
     <Compile Include="ContainerRegistration.cs" />
     <Compile Include="Gw2CoreContainerRegistration.cs" />
-    <Compile Include="Birthdays\ICharacterBirthdays.cs" />
     <Compile Include="InventorySummary\IInventorySummary.cs" />
     <Compile Include="InventorySummary\InventorySummary.cs" />
     <Compile Include="Objects\ItemInformation.cs" />
