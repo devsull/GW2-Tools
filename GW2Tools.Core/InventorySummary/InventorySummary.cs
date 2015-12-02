@@ -174,10 +174,10 @@ namespace GW2Tools.Core.InventorySummary
         /// The item.
         /// </param>
         /// <param name="locType">
-        /// The loc type.
+        /// The location type.
         /// </param>
         /// <param name="locDescription">
-        /// The loc description.
+        /// The location description.
         /// </param>
         private void PutInventoryItemInItemDictionary(InventoryItem item, string locType, string locDescription = null)
         {
@@ -203,10 +203,10 @@ namespace GW2Tools.Core.InventorySummary
         /// The item.
         /// </param>
         /// <param name="locType">
-        /// The loc type.
+        /// The location type.
         /// </param>
         /// <param name="locDescription">
-        /// The loc description.
+        /// The location description.
         /// </param>
         private void PutItemIntoDictionary(string key, ItemInformation item, string locType, string locDescription = null)
         {
