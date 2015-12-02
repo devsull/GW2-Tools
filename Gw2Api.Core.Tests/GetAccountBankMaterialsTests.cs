@@ -1,14 +1,14 @@
-﻿
-using ShortStack.Core.Testing;
-
-namespace Gw2Api.Core.Tests
+﻿namespace Gw2Api.Core.Tests
 {
     using EndPoints;
-    using EndPoints.AccountBank;
+    using EndPoints.AccountBankMaterials;
+
     using Newtonsoft.Json;
-    using Xunit.Abstractions;
+
+    using ShortStack.Core.Testing;
 
     using Xunit;
+    using Xunit.Abstractions;
 
     /// <summary>
     /// The get account bank materials tests.

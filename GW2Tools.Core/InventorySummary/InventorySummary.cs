@@ -14,33 +14,70 @@ namespace GW2Tools.Core.InventorySummary
 
     using Gw2Api.Core.EndPoints;
     using Gw2Api.Core.EndPoints.AccountBank;
+    using Gw2Api.Core.EndPoints.AccountBankMaterials;
     using Gw2Api.Core.EndPoints.AccountCharacterNames;
-    using Gw2Api.Core.EndPoints.CharacterInformation;
     using Gw2Api.Core.EndPoints.CharacterInventory;
     using Gw2Api.Core.EndPoints.Items;
     using Gw2Api.Core.GW2ApiRawObjects;
 
-    using GW2Tools.Core.Objects;
+    using Objects;
 
     using ShortStack.Core;
 
     /// <summary>
     /// The inventory summary.
+    /// TODO: convert to command structure
     /// </summary>
     public class InventorySummary : IInventorySummary
     {
+        /// <summary>
+        /// The get account character names end point.
+        /// </summary>
         private readonly IGw2ApiAuthEndPoint<AccountCharacterNames> getAccountCharacterNamesEndPoint;
 
+        /// <summary>
+        /// The get character inventory end point.
+        /// </summary>
         private readonly IGw2ApiAuthEndPoint<CharacterInventory> getCharacterInventoryEndPoint;
 
+        /// <summary>
+        /// The get account bank end point.
+        /// </summary>
         private readonly IGw2ApiAuthEndPoint<AccountBank> getAccountBankEndPoint;
 
+        /// <summary>
+        /// The get item descriptions end point.
+        /// </summary>
         private readonly IGw2ApiEndPoint<List<ItemDescription>> getItemDescriptionsEndPoint;
 
+        /// <summary>
+        /// The get account materials.
+        /// </summary>
         private readonly IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterials;
 
-        private Dictionary<string, List<ItemInformation>> itemDictionary;
+        /// <summary>
+        /// The item dictionary.
+        /// </summary>
+        private readonly Dictionary<string, List<ItemInformation>> itemDictionary;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InventorySummary"/> class.
+        /// </summary>
+        /// <param name="getAccountCharacterNamesEndPoint">
+        /// The get account character names end point.
+        /// </param>
+        /// <param name="getCharacterInventoryEndPoint">
+        /// The get character inventory end point.
+        /// </param>
+        /// <param name="getAccountBankEndPoint">
+        /// The get account bank end point.
+        /// </param>
+        /// <param name="getItemDescriptionsEndPoint">
+        /// The get item descriptions end point.
+        /// </param>
+        /// <param name="getAccountMaterials">
+        /// The get account materials.
+        /// </param>
         public InventorySummary(
             IGw2ApiAuthEndPoint<AccountCharacterNames> getAccountCharacterNamesEndPoint,
             IGw2ApiAuthEndPoint<CharacterInventory> getCharacterInventoryEndPoint,
@@ -56,6 +93,16 @@ namespace GW2Tools.Core.InventorySummary
             this.itemDictionary = new Dictionary<string, List<ItemInformation>>();
         }
 
+        /// <summary>
+        /// Summarizes an account's inventory by aggregating all items queried into an itemized list
+        /// with location information.
+        /// </summary>
+        /// <param name="apiKey">
+        /// The guild wars 2 API key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="List{T}"/>.
+        /// </returns>
         public List<ItemSummary> SummarizeInventory(string apiKey)
         {
             var materialBank = this.getAccountMaterials.HandleRequest(apiKey);
@@ -90,7 +137,6 @@ namespace GW2Tools.Core.InventorySummary
 
             // once the dictionary is filled out
             // get name and rarity information
-
             var itemIds = this.GetItemIdsFromItemDictionary();
 
             var itemDescriptions = this.getItemDescriptionsEndPoint.HandleRequest(itemIds);
@@ -106,6 +152,62 @@ namespace GW2Tools.Core.InventorySummary
             return itemSummaries;
         }
 
+        /// <summary>
+        /// Puts a material in item dictionary.
+        /// </summary>
+        /// <param name="material">
+        /// The material.
+        /// </param>
+        private void PutMaterialInItemDictionary(MaterialBankItem material)
+        {
+            var key = material.Id;
+
+            var mappedItem = Mapper.Map<MaterialBankItem, ItemInformation>(material);
+
+            this.PutItemIntoDictionary(key, mappedItem, LocationType.MaterialBank);
+        }
+
+        /// <summary>
+        /// Puts an inventory item in item dictionary.
+        /// </summary>
+        /// <param name="item">
+        /// The item.
+        /// </param>
+        /// <param name="locType">
+        /// The loc type.
+        /// </param>
+        /// <param name="locDescription">
+        /// The loc description.
+        /// </param>
+        private void PutInventoryItemInItemDictionary(InventoryItem item, string locType, string locDescription = null)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            var key = item.Id;
+
+            var mappedItem = Mapper.Map<InventoryItem, ItemInformation>(item);
+
+            this.PutItemIntoDictionary(key, mappedItem, locType, locDescription);
+        }
+
+        /// <summary>
+        /// Puts item information into the item dictionary.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <param name="item">
+        /// The item.
+        /// </param>
+        /// <param name="locType">
+        /// The loc type.
+        /// </param>
+        /// <param name="locDescription">
+        /// The loc description.
+        /// </param>
         private void PutItemIntoDictionary(string key, ItemInformation item, string locType, string locDescription = null)
         {
             item.LocationType = locType;
@@ -121,29 +223,12 @@ namespace GW2Tools.Core.InventorySummary
             }
         }
 
-        private void PutMaterialInItemDictionary(MaterialBankItem material)
-        {
-            var key = material.Id;
-
-            var mappedItem = Mapper.Map<MaterialBankItem, ItemInformation>(material);
-
-            this.PutItemIntoDictionary(key, mappedItem, LocationType.MaterialBank);
-        }
-
-        private void PutInventoryItemInItemDictionary(InventoryItem item, string locType, string locDescription = null)
-        {
-            if (item == null)
-            {
-                return;
-            }
-
-            var key = item.Id;
-
-            var mappedItem = Mapper.Map<InventoryItem, ItemInformation>(item);
-
-            this.PutItemIntoDictionary(key, mappedItem, locType, locDescription);
-        }
-
+        /// <summary>
+        /// Get all item ids from the item dictionary.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
         private List<string> GetItemIdsFromItemDictionary()
         {
             return this.itemDictionary.Keys.ToList();

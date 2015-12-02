@@ -9,9 +9,12 @@
     using EndPoints.CharacterInventory;
     using EndPoints.Items;
 
+    using Gw2Api.Core.EndPoints.AccountBankMaterials;
+
     using RestSharp;
 
     using ShortStack.Core;
+    using ShortStack.Core.Configuration;
 
     public class ContainerRegistration : IConfigurationLoader
     {

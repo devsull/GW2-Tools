@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IValidateObjects.cs" company="Devin Sullivan">
-//   This thing I made.
+//   copy write
 // </copyright>
 // <summary>
-//   The ValidateObjects interface.
+//   Interface for validators.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ namespace ShortStack.Core.Validation
     using FluentValidation.Results;
 
     /// <summary>
-    /// The ValidateObjects interface.
+    /// Interface for validators.
     /// </summary>
     /// <typeparam name="T">
     /// The object type to validate

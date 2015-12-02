@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace ShortStack.Core.Configuration
+﻿namespace ShortStack.Core.Configuration
 {
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// The configuration loader.
     /// </summary>

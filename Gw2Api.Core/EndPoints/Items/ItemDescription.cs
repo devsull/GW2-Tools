@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ItemDescription.cs" company="Devin Sullivan">
-//   DMS
+//   copy write
 // </copyright>
 // <summary>
 //   The item description.

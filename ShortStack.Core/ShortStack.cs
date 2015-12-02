@@ -1,30 +1,59 @@
-﻿using System;
-using System.Reflection;
-using ShortStack.Core.Configuration;
-using SimpleInjector;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ShortStack.cs" company="Devin Sullivan">
+//   copy write
+// </copyright>
+// <summary>
+//   The short stack.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ShortStack.Core
 {
+    using Configuration;
+
+    using SimpleInjector;
+
+    /// <summary>
+    /// The short stack.
+    /// </summary>
     public static class ShortStack
     {
-        public static Container Container = new Container();
+        /// <summary>
+        /// The container.
+        /// </summary>
+        public static Container Container { get; } = new Container();
 
+        /// <summary>
+        /// The boot lock.
+        /// </summary>
+        private static readonly object BootLock = new object();
+
+        /// <summary>
+        /// The booted.
+        /// </summary>
         private static bool booted = false;
-
-        private static object bootLock = new object();
-
+        
+        /// <summary>
+        /// Boots the ShortStack.
+        /// </summary>
+        /// <param name="loadDiscovery">
+        /// Will attempt to discover configurations unless this is set to false.
+        /// TODO: make this cleaner.
+        /// </param>
         public static void BootStack(bool loadDiscovery = true)
         {
-            lock (bootLock)
+            lock (BootLock)
             {
-                if (!booted)
+                if (booted)
                 {
-                    if (loadDiscovery)
-                    {
-                        ConfigurationLoader.LoadConfigurations();
-                    }
-                    booted = true;
+                    return;
                 }
+
+                if (loadDiscovery)
+                {
+                    ConfigurationLoader.LoadConfigurations();
+                }
+                booted = true;
             }
         }
     }

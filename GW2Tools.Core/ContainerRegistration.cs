@@ -1,4 +1,12 @@
-﻿
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ContainerRegistration.cs" company="Devin Sullivan">
+//   copy write
+// </copyright>
+// <summary>
+//   The container registration.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace GW2Tools.Core
 {
     using System.Collections.Generic;
@@ -7,19 +15,23 @@ namespace GW2Tools.Core
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
 
-    using GW2Tools.Core.Validators;
-
     using InventorySummary;
 
     using ShortStack.Core;
     using ShortStack.Core.Commands;
+    using ShortStack.Core.Configuration;
     using ShortStack.Core.Validation;
+
+    using Validators;
 
     /// <summary>
     /// The container registration.
     /// </summary>
     public class ContainerRegistration : IConfigurationLoader
     {
+        /// <summary>
+        /// The configure.
+        /// </summary>
         public void Configure()
         {
             // validators

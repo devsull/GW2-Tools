@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Settings.cs" company="DMS">
-//   DMS stands for Devin Sullivan.
+// <copyright file="Settings.cs" company="Devin Sullivan">
+//   copy write
 // </copyright>
 // <summary>
 //   The settings.

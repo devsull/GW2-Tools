@@ -2,6 +2,9 @@
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// The raw inventory bag object received from the GW2 API.
+    /// </summary>
     public class InventoryBag
     {
         public string Id { get; set; }

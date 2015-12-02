@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="InventoryItem.cs" company="Devin Sullivan">
-//   DMS
+//   copy write
 // </copyright>
 // <summary>
-//   The inventory item.
+//   The raw item object received from the GW2 API.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Gw2Api.Core.GW2ApiRawObjects
 {
     /// <summary>
-    /// The inventory item.
+    /// The raw inventory item object received from the GW2 API.
     /// </summary>
     public class InventoryItem
     {

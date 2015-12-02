@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ObjectMappings.cs" company="Devin Sullivan">
-//   Copy write
+//   copy write
 // </copyright>
 // <summary>
 //   Defines the ObjectMappings type.
@@ -19,6 +19,7 @@ namespace Gw2Api.Core
     using Nelibur.ObjectMapper;
 
     using ShortStack.Core;
+    using ShortStack.Core.Configuration;
 
     /// <summary>
     /// The object mappings.
