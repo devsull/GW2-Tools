@@ -34,14 +34,6 @@
         {
             var inventorySummary = this.SystemUnderTest.SummarizeInventory(testKey);
 
-            //foreach (var character in characters)
-            //{
-            //    Assert.NotNull(character.Birthday);
-            //    Assert.NotNull(character.Name);
-            //    Assert.NotNull(character.Race);
-            //    Assert.NotNull(character.Profession);
-            //}
-
             var json = JsonConvert.SerializeObject(inventorySummary);
 
             this.output.WriteLine("Json: {0}", json);
