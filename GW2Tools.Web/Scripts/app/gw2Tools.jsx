@@ -17,26 +17,26 @@ var Gw2Tools = React.createClass({
         var validLength = 72;
         var validTokenCount = 9;
         
-        if (apiKeyInput.length != validLength) {
+        if (apiKeyInput.length !== validLength) {
             return false;
         }
         
         var tokens = apiKeyInput.split("-");
-        if (tokens.length != validTokenCount) {
+        if (tokens.length !== validTokenCount) {
             return false;
         }
         
         // api keys look like this :)
         // just length and format validation for now
-        return tokens[0].length == 8
-            && tokens[1].length == 4
-            && tokens[2].length == 4
-            && tokens[3].length == 4
-            && tokens[4].length == 20
-            && tokens[5].length == 4
-            && tokens[6].length == 4
-            && tokens[7].length == 4
-            && tokens[8].length == 12;
+        return tokens[0].length === 8
+            && tokens[1].length === 4
+            && tokens[2].length === 4
+            && tokens[3].length === 4
+            && tokens[4].length === 20
+            && tokens[5].length === 4
+            && tokens[6].length === 4
+            && tokens[7].length === 4
+            && tokens[8].length === 12;
     },
     
     getBirthdays: function () {
@@ -46,7 +46,7 @@ var Gw2Tools = React.createClass({
             this.setState({ birthdayData: [] });
             var payload = { apiKey: this.state.apiKeyInput };
             $.get('/Tools/GetBirthdays', payload, (result) => {
-                loading = this.state.loading - 1;
+                var loading = this.state.loading - 1;
                 this.setState({ birthdayData: result, loading: loading });
             });
         }
@@ -59,7 +59,7 @@ var Gw2Tools = React.createClass({
             this.setState({ birthdayData: [] });
             var payload = { apiKey: this.state.apiKeyInput };
             $.get('/Tools/AccountInventory', payload, (result) => {
-                loading = this.state.loading - 1;
+                var loading = this.state.loading - 1;
                 this.setState({ accountInventory: result, loading: loading });
             });
         }
@@ -79,7 +79,7 @@ var Gw2Tools = React.createClass({
     },
     
     setItemFilter: function (filter) {
-        this.setState({filterItemName: filter})
+        this.setState({ filterItemName: filter });
     },
     
     render: function () {
@@ -219,7 +219,7 @@ var LocationRow = React.createClass({
                     {this.props.quantity}
                 </td>
             </tr>
-        )
+        );
     }
 });
 
@@ -284,7 +284,7 @@ var AccountInventoryRow = React.createClass({
                     </div>
                 </td>
            </tr>
-       )
+       );
    }
 });
 
