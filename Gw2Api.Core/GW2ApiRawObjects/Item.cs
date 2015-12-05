@@ -17,7 +17,7 @@ namespace Gw2Api.Core.GW2ApiRawObjects
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

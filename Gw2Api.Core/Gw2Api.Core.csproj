@@ -61,6 +61,7 @@
     <Compile Include="EndPoints\AccountBankMaterials\GetAccountBankMaterials.cs" />
     <Compile Include="EndPoints\AccountBank\AccountBank.cs" />
     <Compile Include="EndPoints\AccountBank\GetAccountBank.cs" />
+    <Compile Include="EndPoints\CharacterEquipment\GetCharacterEquipment.cs" />
     <Compile Include="EndPoints\CharacterInformation\GetCharacterInformation.cs" />
     <Compile Include="EndPoints\BaseGw2ApiEndPoint.cs" />
     <Compile Include="EndPoints\CharacterInformation\CharacterInformation.cs" />
@@ -74,6 +75,8 @@
     <Compile Include="EndPoints\IGw2ApiEndPoint.cs" />
     <Compile Include="EndPoints\Items\GetItemDescriptions.cs" />
     <Compile Include="EndPoints\Items\ItemDescription.cs" />
+    <Compile Include="GW2ApiRawObjects\CharacterEquipment.cs" />
+    <Compile Include="GW2ApiRawObjects\EquippedItem.cs" />
     <Compile Include="GW2ApiRawObjects\MaterialBankItem.cs" />
     <Compile Include="GW2ApiRawObjects\Inventory.cs" />
     <Compile Include="GW2ApiRawObjects\InventoryBag.cs" />

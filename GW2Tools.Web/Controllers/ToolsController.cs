@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ToolsController.cs" company="DMS">
-//   For me by me
+// <copyright file="ToolsController.cs" company="Devin Sullivan">
+//   copy write
 // </copyright>
 // <summary>
 //   Defines the ToolsController type.

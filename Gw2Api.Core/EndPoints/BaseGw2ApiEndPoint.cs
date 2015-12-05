@@ -80,7 +80,7 @@ namespace Gw2Api.Core.EndPoints
         {
             if (this.ApiEndPoint == null)
             {
-                throw new InvalidOperationException("Api end point not specified in an implementation of BaseGw2ApiEndPoint");
+                throw new ArgumentNullException(nameof(apiKey));
             }
 
             // start end point building

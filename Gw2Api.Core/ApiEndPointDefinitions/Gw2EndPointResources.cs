@@ -28,5 +28,10 @@ namespace Gw2Api.Core.ApiEndPointDefinitions
         /// Gets the Material resource.
         /// </summary>
         public static string Material => "materials";
+
+        /// <summary>
+        /// Gets the equipment resource.
+        /// </summary>
+        public static string Equipment => "equipment";
     }
 }

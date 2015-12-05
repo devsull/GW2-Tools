@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetAccountBankMaterialsTests.cs" />
+    <Compile Include="GetCharacterEquipmentTests.cs" />
     <Compile Include="GetItemDescriptionsTests.cs" />
     <Compile Include="GetAccountBankTests.cs" />
     <Compile Include="GetAccountCharacterNamesTests.cs" />
