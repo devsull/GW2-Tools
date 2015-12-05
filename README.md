@@ -6,8 +6,8 @@ Get useful information from the GW2 API using GW2Tools!
 - Character birthday report
 
 ## TODO:
- * Organize Code
  * Ability to save API Keys
  * Optimize API round trips with async calls
  * Features:
 	* Add equipped to item search
+	* Add Warnings on soulbound (character specific) items in bank
