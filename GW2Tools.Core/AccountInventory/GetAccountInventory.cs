@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InventorySummary.cs" company="Devin Sullivan">
+// <copyright file="GetAccountInventory.cs" company="Devin Sullivan">
 //   copy write
 // </copyright>
 // <summary>
@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace GW2Tools.Core.InventorySummary
+namespace GW2Tools.Core.AccountInventory
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -23,12 +23,13 @@ namespace GW2Tools.Core.InventorySummary
     using Objects;
 
     using ShortStack.Core;
+    using ShortStack.Core.Commands;
+    using ShortStack.Core.Validation;
 
     /// <summary>
     /// The inventory summary.
-    /// TODO: convert to command structure
     /// </summary>
-    public class InventorySummary : IInventorySummary
+    public class GetAccountInventory : BaseCommand<GetAccountInventoryRequest, List<ItemSummary>>
     {
         /// <summary>
         /// The get account character names end point.
@@ -46,22 +47,27 @@ namespace GW2Tools.Core.InventorySummary
         private readonly IGw2ApiAuthEndPoint<AccountBank> getAccountBankEndPoint;
 
         /// <summary>
-        /// The get item descriptions end point.
+        /// The get itemLocation descriptions end point.
         /// </summary>
         private readonly IGw2ApiEndPoint<List<ItemDescription>> getItemDescriptionsEndPoint;
 
         /// <summary>
         /// The get account materials.
         /// </summary>
-        private readonly IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterials;
+        private readonly IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterialsEndPoint;
 
         /// <summary>
-        /// The item dictionary.
+        /// The get equipped items end point.
         /// </summary>
-        private readonly Dictionary<string, List<ItemInformation>> itemDictionary;
+        private readonly IGw2ApiAuthEndPoint<CharacterEquipment> getEquippedItemsEndPoint;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InventorySummary"/> class.
+        /// The itemLocation dictionary.
+        /// </summary>
+        private readonly Dictionary<string, List<ItemLocationInformation>> itemDictionary = new Dictionary<string, List<ItemLocationInformation>>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetAccountInventory"/> class.
         /// </summary>
         /// <param name="getAccountCharacterNamesEndPoint">
         /// The get account character names end point.
@@ -73,24 +79,33 @@ namespace GW2Tools.Core.InventorySummary
         /// The get account bank end point.
         /// </param>
         /// <param name="getItemDescriptionsEndPoint">
-        /// The get item descriptions end point.
+        /// The get itemLocation descriptions end point.
         /// </param>
-        /// <param name="getAccountMaterials">
+        /// <param name="getAccountMaterialsEndPoint">
         /// The get account materials.
         /// </param>
-        public InventorySummary(
+        public GetAccountInventory(
+            IValidateObjects<GetAccountInventoryRequest> validator,
             IGw2ApiAuthEndPoint<AccountCharacterNames> getAccountCharacterNamesEndPoint,
             IGw2ApiAuthEndPoint<CharacterInventory> getCharacterInventoryEndPoint,
             IGw2ApiAuthEndPoint<AccountBank> getAccountBankEndPoint,
             IGw2ApiEndPoint<List<ItemDescription>> getItemDescriptionsEndPoint,
-            IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterials)
+            IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterialsEndPoint,
+            IGw2ApiAuthEndPoint<CharacterEquipment> getEquippedItemsEndPoint)
+            : base(validator)
         {
             this.getAccountCharacterNamesEndPoint = getAccountCharacterNamesEndPoint;
             this.getCharacterInventoryEndPoint = getCharacterInventoryEndPoint;
             this.getAccountBankEndPoint = getAccountBankEndPoint;
             this.getItemDescriptionsEndPoint = getItemDescriptionsEndPoint;
-            this.getAccountMaterials = getAccountMaterials;
-            this.itemDictionary = new Dictionary<string, List<ItemInformation>>();
+            this.getAccountMaterialsEndPoint = getAccountMaterialsEndPoint;
+            this.getEquippedItemsEndPoint = getEquippedItemsEndPoint;
+        }
+
+
+        protected override List<ItemSummary> HandleRequest()
+        {
+            return this.SummarizeInventory(this.Request.GuildWars2ApiKey);
         }
 
         /// <summary>
@@ -103,9 +118,9 @@ namespace GW2Tools.Core.InventorySummary
         /// <returns>
         /// The <see cref="List{T}"/>.
         /// </returns>
-        public List<ItemSummary> SummarizeInventory(string apiKey)
+        private List<ItemSummary> SummarizeInventory(string apiKey)
         {
-            var materialBank = this.getAccountMaterials.HandleRequest(apiKey);
+            var materialBank = this.getAccountMaterialsEndPoint.HandleRequest(apiKey);
 
             foreach (var material in materialBank.Materials)
             {
@@ -127,11 +142,19 @@ namespace GW2Tools.Core.InventorySummary
             foreach (var characterName in characters.Names)
             {
                 var inventory = this.getCharacterInventoryEndPoint.HandleRequest(apiKey, characterName);
-                var flatListOfItemsFromBags = inventory.Bags.Where(b => b != null).SelectMany(b => b.Inventory);
+                
+                var flatListOfItemsFromBags = inventory.Bags.Where(b => b != null).SelectMany(b => b.Inventory).ToList();
 
                 foreach (var inventoryItem in flatListOfItemsFromBags)
                 {
                     this.PutInventoryItemInItemDictionary(inventoryItem, LocationType.CharacterInventory, characterName);
+                }
+
+                var characterEquipment = this.getEquippedItemsEndPoint.HandleRequest(apiKey, characterName);
+
+                foreach (var equippedItem in characterEquipment.Equipment)
+                {
+                    this.PutInventoryEquipmentInItemDictionary(equippedItem, characterName);
                 }
             }
 
@@ -152,8 +175,19 @@ namespace GW2Tools.Core.InventorySummary
             return itemSummaries;
         }
 
+        private void PutInventoryEquipmentInItemDictionary(EquippedItem equippedItem, string characterName)
+        {
+            var key = equippedItem.Id.ToString();
+            // TODO: figure out how get binding??
+            var inventoryItem = new ItemLocationInformation { Quantity = 1 };
+
+            var locationDescription = $"{characterName}, slot: {equippedItem.Slot}";
+
+            this.PutItemIntoDictionary(key, inventoryItem, LocationType.Equipped, locationDescription);
+        }
+
         /// <summary>
-        /// Puts a material in item dictionary.
+        /// Puts a material in itemLocation dictionary.
         /// </summary>
         /// <param name="material">
         /// The material.
@@ -162,16 +196,16 @@ namespace GW2Tools.Core.InventorySummary
         {
             var key = material.Id;
 
-            var mappedItem = Mapper.Map<MaterialBankItem, ItemInformation>(material);
+            var mappedItem = Mapper.Map<MaterialBankItem, ItemLocationInformation>(material);
 
             this.PutItemIntoDictionary(key, mappedItem, LocationType.MaterialBank);
         }
 
         /// <summary>
-        /// Puts an inventory item in item dictionary.
+        /// Puts an inventory itemLocation in itemLocation dictionary.
         /// </summary>
         /// <param name="item">
-        /// The item.
+        /// The itemLocation.
         /// </param>
         /// <param name="locType">
         /// The location type.
@@ -188,19 +222,19 @@ namespace GW2Tools.Core.InventorySummary
 
             var key = item.Id;
 
-            var mappedItem = Mapper.Map<InventoryItem, ItemInformation>(item);
+            var mappedItem = Mapper.Map<InventoryItem, ItemLocationInformation>(item);
 
             this.PutItemIntoDictionary(key, mappedItem, locType, locDescription);
         }
 
         /// <summary>
-        /// Puts item information into the item dictionary.
+        /// Puts itemLocation information into the itemLocation dictionary.
         /// </summary>
         /// <param name="key">
         /// The key.
         /// </param>
-        /// <param name="item">
-        /// The item.
+        /// <param name="itemLocation">
+        /// The itemLocation.
         /// </param>
         /// <param name="locType">
         /// The location type.
@@ -208,23 +242,23 @@ namespace GW2Tools.Core.InventorySummary
         /// <param name="locDescription">
         /// The location description.
         /// </param>
-        private void PutItemIntoDictionary(string key, ItemInformation item, string locType, string locDescription = null)
+        private void PutItemIntoDictionary(string key, ItemLocationInformation itemLocation, string locType, string locDescription = null)
         {
-            item.LocationType = locType;
-            item.LocationDescription = locDescription;
+            itemLocation.LocationType = locType;
+            itemLocation.LocationDescription = locDescription;
 
             if (this.itemDictionary.ContainsKey(key))
             {
-                this.itemDictionary[key].Add(item);
+                this.itemDictionary[key].Add(itemLocation);
             }
             else
             {
-                this.itemDictionary.Add(key, new List<ItemInformation> { item });
+                this.itemDictionary.Add(key, new List<ItemLocationInformation> { itemLocation });
             }
         }
 
         /// <summary>
-        /// Get all item ids from the item dictionary.
+        /// Get all itemLocation ids from the itemLocation dictionary.
         /// </summary>
         /// <returns>
         /// The <see cref="List"/>.

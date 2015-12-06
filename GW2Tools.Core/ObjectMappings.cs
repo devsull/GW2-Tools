@@ -30,15 +30,20 @@ namespace GW2Tools.Core
         public void Configure()
         {
             // item information mappings
-            TinyMapper.Bind<InventoryItem, ItemInformation>(config =>
+            TinyMapper.Bind<InventoryItem, ItemLocationInformation>(config =>
             {
                 config.Bind(source => source.Bound_To, target => target.BoundTo);
                 config.Bind(source => source.Count, target => target.Quantity);
             });
-            TinyMapper.Bind<MaterialBankItem, ItemInformation>(config =>
+            TinyMapper.Bind<MaterialBankItem, ItemLocationInformation>(config =>
             {
                 config.Bind(source => source.Count, target => target.Quantity);
             });
+            //TinyMapper.Bind<EquippedItem, ItemLocationInformation>(config =>
+            //{
+            //    config.Bind(source => LocationType.CharacterInventory, target => target.Location);
+                
+            //});
 
             //// character inventory mappings
             TinyMapper.Bind<ItemDescription, ItemSummary>();

@@ -11,11 +11,13 @@ namespace GW2Tools.Core
 {
     using System.Collections.Generic;
 
+    using AccountInventory;
+
     using Birthdays;
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
 
-    using InventorySummary;
+    using Objects;
 
     using ShortStack.Core;
     using ShortStack.Core.Commands;
@@ -36,11 +38,11 @@ namespace GW2Tools.Core
         {
             // validators
             ShortStack.Container.Register<IValidateObjects<GetBirthdaysRequest>, GetBirthdaysRequestValidator>();
+            ShortStack.Container.Register<IValidateObjects<GetAccountInventoryRequest>, GetAccountInventoryRequestValidator>();
 
             // commands
             ShortStack.Container.Register<BaseCommand<GetBirthdaysRequest, List<CharacterInformation>>, GetBirthdaysCommand>();
-            
-            ShortStack.Container.Register<IInventorySummary, InventorySummary.InventorySummary>();
+            ShortStack.Container.Register<BaseCommand<GetAccountInventoryRequest, List<ItemSummary>>, GetAccountInventory>();
         }
     }
 }

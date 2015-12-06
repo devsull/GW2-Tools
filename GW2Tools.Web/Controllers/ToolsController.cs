@@ -13,9 +13,11 @@ namespace GW2Tools.Web.Controllers
     using System.Web.Mvc;
 
     using Core.Birthdays;
-    using Core.InventorySummary;
 
     using Gw2Api.Core.EndPoints.CharacterInformation;
+
+    using GW2Tools.Core.AccountInventory;
+    using GW2Tools.Core.Objects;
 
     using ShortStack.Core.Commands;
 
@@ -26,9 +28,9 @@ namespace GW2Tools.Web.Controllers
     public class ToolsController : Controller
     {
         /// <summary>
-        /// The get inventory summary.
+        /// The get account inventory command.
         /// </summary>
-        private readonly IInventorySummary getInventorySummary;
+        private readonly BaseCommand<GetAccountInventoryRequest, List<ItemSummary>> getAccountInventoryCommand;
 
         /// <summary>
         /// The get birthdays command.
@@ -44,9 +46,9 @@ namespace GW2Tools.Web.Controllers
         /// <param name="getBirthdaysCommand">
         /// The get Birthdays Command.
         /// </param>
-        public ToolsController(IInventorySummary getInventorySummary, BaseCommand<GetBirthdaysRequest, List<CharacterInformation>> getBirthdaysCommand)
+        public ToolsController(BaseCommand<GetAccountInventoryRequest, List<ItemSummary>> getInventorySummary, BaseCommand<GetBirthdaysRequest, List<CharacterInformation>> getBirthdaysCommand)
         {
-            this.getInventorySummary = getInventorySummary;
+            this.getAccountInventoryCommand = getInventorySummary;
             this.getBirthdaysCommand = getBirthdaysCommand;
         }
         
@@ -62,9 +64,10 @@ namespace GW2Tools.Web.Controllers
         [HttpGet]
         public ActionResult AccountInventory(string apiKey)
         {
-            var inventory = this.getInventorySummary.SummarizeInventory(apiKey);
+            var request = new GetAccountInventoryRequest { GuildWars2ApiKey = apiKey };
+            var response = this.getAccountInventoryCommand.Execute(request);
 
-            return this.RespondWithJson(inventory);
+            return this.RespondWithJson(response.Result);
         }
 
         /// <summary>

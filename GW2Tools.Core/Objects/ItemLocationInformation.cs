@@ -1,6 +1,6 @@
 ﻿namespace GW2Tools.Core.Objects
 {
-    public class ItemInformation
+    public class ItemLocationInformation
     {
         public int Quantity { get; set; }
 

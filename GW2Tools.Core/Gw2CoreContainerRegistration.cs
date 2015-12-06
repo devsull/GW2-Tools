@@ -10,10 +10,6 @@
 
 namespace GW2Tools.Core
 {
-    using InventorySummary;
-
-    using ShortStack.Core;
-
     /// <summary>
     /// The Guild Wars 2 core container registration, only needed for some tests.
     /// TODO: Fix why this exists.
@@ -27,8 +23,6 @@ namespace GW2Tools.Core
         {
             var registerApi = new Gw2Api.Core.ContainerRegistration();
             registerApi.Configure();
-
-            ShortStack.Container.Register<IInventorySummary, InventorySummary.InventorySummary>();
         }
     }
 }

@@ -28,6 +28,6 @@
 
         public string IconUrl { get; set; }
 
-        public List<ItemInformation> LocationList { get; set; }
+        public List<ItemLocationInformation> LocationList { get; set; }
     }
 }
