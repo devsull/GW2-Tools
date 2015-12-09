@@ -267,7 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\es6-promise\es6-promise.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\es6-shim\es6-shim.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\rx\rx-lite.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\rx\rx.aggregates.d.ts" />

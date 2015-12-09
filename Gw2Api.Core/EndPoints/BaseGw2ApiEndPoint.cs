@@ -17,14 +17,11 @@ namespace Gw2Api.Core.EndPoints
     using System.Net;
     using System.Text;
 
-    using Gw2Api.Core.GW2ApiRawObjects;
+    using GW2ApiRawObjects;
 
     using Newtonsoft.Json;
 
     using RestSharp;
-    using RestSharp.Deserializers;
-
-    using ShortStack.Core;
 
     /// <summary>
     /// Base class for implementing Gw2ApiEndPoints, to be used in conjunction with an interface of 
@@ -95,6 +92,15 @@ namespace Gw2Api.Core.EndPoints
             return this.HandleRequest(request);
         }
 
+        /// <summary>
+        /// Handles the rest request
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// A response with Data or Error messages in it.
+        /// </returns>
         private Gw2ApiResponse<T> HandleRequest(IRestRequest request)
         {
             var restClientResponse = this.restClient.Execute<T>(request);
@@ -111,6 +117,15 @@ namespace Gw2Api.Core.EndPoints
             return response;
         }
 
+        /// <summary>
+        /// Gets the error messages from the response, these could be rest related or gw2 API related.
+        /// </summary>
+        /// <param name="restClientResponse">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The list of error messages gathered from the response, will be null if none exist.
+        /// </returns>
         private List<string> GetErrorMessagesInResponse(IRestResponse<T> restClientResponse)
         {
             var errorMessages = new List<string>();
