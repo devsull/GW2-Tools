@@ -67,17 +67,18 @@ namespace GW2Tools.Core.Birthdays
         {
             var characters = this.accountCharacterNamesEndPoint.HandleRequest(this.Request.GuildWars2ApiKey);
 
-            if (characters.Names == null)
+            var names = characters.Data.Names;
+            if (names == null)
             {
                 return null;
             }
 
             var response = new List<CharacterInformation>();
-            
+
             Parallel.ForEach(
-                characters.Names,
+                names,
                 (name) =>
-                response.Add(this.characterInformationEndPoint.HandleRequest(this.Request.GuildWars2ApiKey, name)));
+                response.Add(this.characterInformationEndPoint.HandleRequest(this.Request.GuildWars2ApiKey, name).Data));
 
             return response.OrderBy(c => c.DaysUntilBirthday).ToList();
         }

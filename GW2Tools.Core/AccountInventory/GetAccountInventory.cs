@@ -122,7 +122,7 @@ namespace GW2Tools.Core.AccountInventory
         {
             var materialBank = this.getAccountMaterialsEndPoint.HandleRequest(apiKey);
 
-            foreach (var material in materialBank.Materials)
+            foreach (var material in materialBank.Data.Materials)
             {
                 this.PutMaterialInItemDictionary(material);
             }
@@ -130,7 +130,7 @@ namespace GW2Tools.Core.AccountInventory
             var bank = this.getAccountBankEndPoint.HandleRequest(apiKey);
 
             // insert bank into dictionary
-            foreach (var inventoryItem in bank.Items)
+            foreach (var inventoryItem in bank.Data.Items)
             {
                 this.PutInventoryItemInItemDictionary(inventoryItem, LocationType.Bank);
             }
@@ -139,11 +139,11 @@ namespace GW2Tools.Core.AccountInventory
             // insert character inventories into dictionary
             var characters = this.getAccountCharacterNamesEndPoint.HandleRequest(apiKey);
             
-            foreach (var characterName in characters.Names)
+            foreach (var characterName in characters.Data.Names)
             {
                 var inventory = this.getCharacterInventoryEndPoint.HandleRequest(apiKey, characterName);
                 
-                var flatListOfItemsFromBags = inventory.Bags.Where(b => b != null).SelectMany(b => b.Inventory).ToList();
+                var flatListOfItemsFromBags = inventory.Data.Bags.Where(b => b != null).SelectMany(b => b.Inventory).ToList();
 
                 foreach (var inventoryItem in flatListOfItemsFromBags)
                 {
@@ -152,7 +152,7 @@ namespace GW2Tools.Core.AccountInventory
 
                 var characterEquipment = this.getEquippedItemsEndPoint.HandleRequest(apiKey, characterName);
 
-                foreach (var equippedItem in characterEquipment.Equipment)
+                foreach (var equippedItem in characterEquipment.Data.Equipment)
                 {
                     this.PutInventoryEquipmentInItemDictionary(equippedItem, characterName);
                 }

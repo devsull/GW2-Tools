@@ -11,7 +11,7 @@ namespace Gw2Api.Core.EndPoints.AccountCharacterNames
 {
     using System.Collections.Generic;
 
-    using ApiEndPointDefinitions;
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
 
     using RestSharp;
 
@@ -39,19 +39,21 @@ namespace Gw2Api.Core.EndPoints.AccountCharacterNames
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The api key.
+        ///     The api key.
         /// </param>
         /// <param name="resourceEndPoint">
-        /// The resource end point.
+        ///     The resource end point.
         /// </param>
         /// <returns>
         /// The <see cref="AccountCharacterNames"/>.
         /// </returns>
-        public AccountCharacterNames HandleRequest(string apiKey, string resourceEndPoint = null)
+        public Gw2ApiResponse<AccountCharacterNames> HandleRequest(string apiKey, string resourceEndPoint = null)
         {
-            var data = this.Execute(apiKey);
+            var response = this.Execute(apiKey);
+
+            var data = new AccountCharacterNames { Names = response.Data };
             
-            return new AccountCharacterNames { Names = data };
+            return new Gw2ApiResponse<AccountCharacterNames> { Data = data, ErrorMessages = response.ErrorMessages };
         }
     }
 }

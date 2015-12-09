@@ -51,8 +51,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="TinyMapper, Version=2.0.0.39, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TinyMapper.2.0.6\lib\net45\TinyMapper.dll</HintPath>
+    <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TinyMapper.2.0.8\lib\net45\TinyMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -70,8 +70,10 @@
     <Compile Include="EndPoints\AccountCharacterNames\AccountCharacterNames.cs" />
     <Compile Include="EndPoints\CharacterInventory\CharacterInventory.cs" />
     <Compile Include="EndPoints\CharacterInventory\GetCharacterInventory.cs" />
-    <Compile Include="ApiEndPointDefinitions\Gw2EndPointResources.cs" />
-    <Compile Include="ApiEndPointDefinitions\Gw2EndPoints.cs" />
+    <Compile Include="GW2ApiRawObjects\ErrorMessage.cs" />
+    <Compile Include="Gw2ApiResponse.cs" />
+    <Compile Include="LookUpValues\EndPointDefinitions\Gw2EndPointResources.cs" />
+    <Compile Include="LookUpValues\EndPointDefinitions\Gw2EndPoints.cs" />
     <Compile Include="EndPoints\IGw2ApiEndPoint.cs" />
     <Compile Include="EndPoints\Items\GetItemDescriptions.cs" />
     <Compile Include="EndPoints\Items\ItemDescription.cs" />

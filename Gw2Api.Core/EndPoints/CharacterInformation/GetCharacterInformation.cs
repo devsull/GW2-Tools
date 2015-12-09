@@ -10,7 +10,9 @@
 namespace Gw2Api.Core.EndPoints.CharacterInformation
 {
     using System.Collections.Generic;
-    using ApiEndPointDefinitions;
+
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
     using RestSharp;
     using ShortStack.Core;
@@ -39,24 +41,24 @@ namespace Gw2Api.Core.EndPoints.CharacterInformation
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The guild wars 2 API key.
+        ///     The guild wars 2 API key.
         /// </param>
         /// <param name="name">
-        /// The name.
+        ///     The name.
         /// </param>
         /// <returns>
         /// The <see cref="CharacterInformation"/>.
         /// </returns>
-        public CharacterInformation HandleRequest(string apiKey, string name = null)
+        public Gw2ApiResponse<CharacterInformation> HandleRequest(string apiKey, string name = null)
         {
             // add name to the resource list
             this.ApiResources = new List<string> {name };
 
-            var data = this.Execute(apiKey);
+            var response = this.Execute(apiKey);
 
-            var mapped = Mapper.Map<Character, CharacterInformation>(data);
+            var mapped = Mapper.Map<Character, CharacterInformation>(response.Data);
 
-            return mapped;
+            return new Gw2ApiResponse<CharacterInformation> { Data = mapped, ErrorMessages = response.ErrorMessages };
         }
     }
 }

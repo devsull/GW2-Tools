@@ -11,7 +11,8 @@ namespace Gw2Api.Core.EndPoints.CharacterEquipment
 {
     using System.Collections.Generic;
 
-    using ApiEndPointDefinitions;
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
 
     using RestSharp;
@@ -40,22 +41,22 @@ namespace Gw2Api.Core.EndPoints.CharacterEquipment
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The guild wars 2 api key.
+        ///     The guild wars 2 api key.
         /// </param>
         /// <param name="name">
-        /// The name of the character.
+        ///     The name of the character.
         /// </param>
         /// <returns>
         /// The <see cref="CharacterEquipment"/>.
         /// </returns>
-        public CharacterEquipment HandleRequest(string apiKey, string name)
+        public Gw2ApiResponse<CharacterEquipment> HandleRequest(string apiKey, string name = null)
         {
             // add name to the resource list
             // also add "equipment" to the list because we want the equipped items of the character!
             this.ApiResources = new List<string> { name, Gw2EndPointResources.Equipment };
 
             var response = this.Execute(apiKey);
-
+            
             return response;
         }
     }

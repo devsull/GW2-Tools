@@ -18,6 +18,8 @@ namespace Gw2Api.Core
 
     using Nelibur.ObjectMapper;
 
+    using RestSharp;
+
     using ShortStack.Core;
     using ShortStack.Core.Configuration;
 

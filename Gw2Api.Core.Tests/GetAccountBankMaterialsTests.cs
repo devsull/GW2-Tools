@@ -30,7 +30,7 @@
             var info = this.SystemUnderTest.HandleRequest(this.testKey);
 
             // since im testing my material bank, I know I dont only have one item in it....
-            Assert.True(info.Materials.Count > 1, "I dont believe that you only have 1 in your materials!");
+            Assert.True(info.Data.Materials.Count > 1, "I dont believe that you only have 1 in your materials!");
 
             var json = JsonConvert.SerializeObject(info);
 

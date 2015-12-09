@@ -28,7 +28,7 @@ namespace Gw2Api.Core.Tests
         {
             var info = this.SystemUnderTest.HandleRequest(this.testKey, this.characterName);
             
-            Assert.True(info.Bags.Count > 1, $"I dont believe that you only have 1 bag on {this.characterName}!");
+            Assert.True(info.Data.Bags.Count > 1, $"I dont believe that you only have 1 bag on {this.characterName}!");
             
             var json = JsonConvert.SerializeObject(info);
 

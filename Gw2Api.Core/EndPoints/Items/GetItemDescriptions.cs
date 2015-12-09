@@ -12,7 +12,8 @@ namespace Gw2Api.Core.EndPoints.Items
     using System.Collections.Generic;
     using System.Linq;
 
-    using ApiEndPointDefinitions;
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
 
     using RestSharp;
@@ -63,7 +64,9 @@ namespace Gw2Api.Core.EndPoints.Items
             var itemDescriptions = new List<Item>();
 
             var total = itemIds.Count;
-            
+
+            //// TODO: handle failed requests
+
             // execute one api call per id limit
             for (var i = 0; i < total; i += this.idLimit)
             {
@@ -75,9 +78,9 @@ namespace Gw2Api.Core.EndPoints.Items
 
                 this.ApiQueryParams.Add(this.idsParam, values);
 
-                var data = this.Execute();
+                var apiResponse = this.Execute();
 
-                itemDescriptions.AddRange(data);
+                itemDescriptions.AddRange(apiResponse.Data);
             }
 
             var response = Mapper.Map<List<Item>, List<ItemDescription>>(itemDescriptions);

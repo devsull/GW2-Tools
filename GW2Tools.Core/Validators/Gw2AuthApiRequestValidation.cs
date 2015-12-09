@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GW2AuthApiRequestValidator.cs" company="Devin Sullivan">
+// <copyright file="Gw2AuthApiRequestValidation.cs" company="Devin Sullivan">
 //   copy write
 // </copyright>
 // <summary>
-//   The guild wars 2 auth API request validation.
+//   The guild wars 2 authenticated API request validation helpers.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,20 +12,20 @@ namespace GW2Tools.Core.Validators
     using System.Linq;
 
     /// <summary>
-    /// The guild wars 2 auth API request validation.
+    /// The guild wars 2 authenticated API request validation helpers.
     /// </summary>
     public static class Gw2AuthApiRequestValidation
     {
         /// <summary>
-        /// Checks that the api key looks like a gw2 api key (follows a length pattern between delimiters and is alpha numeric).
+        /// Checks that the API key passed looks like a GW2 API key (follows a length pattern between delimiters and is alpha numeric).
         /// </summary>
         /// <param name="possibleKey">
-        /// The possible api key.
+        /// The possible API key.
         /// </param>
         /// <returns>
-        /// The <see cref="bool"/>.
+        /// True if the possibleKey looks like a valid GW2 API key.
         /// </returns>
-        public static bool LooksLikeGuildWarsTwoAPIKey(string possibleKey)
+        public static bool LookLikeAValidGuildWarsTwoApiKey(string possibleKey)
         {
             const char Delimiter = '-';
             

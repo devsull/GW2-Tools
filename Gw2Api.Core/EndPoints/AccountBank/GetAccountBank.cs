@@ -11,7 +11,8 @@ namespace Gw2Api.Core.EndPoints.AccountBank
 {
     using System.Collections.Generic;
 
-    using ApiEndPointDefinitions;
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
 
     using RestSharp;
@@ -40,19 +41,21 @@ namespace Gw2Api.Core.EndPoints.AccountBank
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The api key.
+        ///     The api key.
         /// </param>
         /// <param name="resourceEndPoint">
-        /// The resource end point.
+        ///     The resource end point.
         /// </param>
         /// <returns>
         /// The <see cref="AccountBank"/>.
         /// </returns>
-        public AccountBank HandleRequest(string apiKey, string resourceEndPoint = null)
+        public Gw2ApiResponse<AccountBank> HandleRequest(string apiKey, string resourceEndPoint = null)
         {
-            var data = this.Execute(apiKey);
-            
-            return new AccountBank { Items = data };
+            var response = this.Execute(apiKey);
+
+            var data = new AccountBank { Items = response.Data };
+
+            return new Gw2ApiResponse<AccountBank> { ErrorMessages = response.ErrorMessages, Data = data };
         }
     }
 }

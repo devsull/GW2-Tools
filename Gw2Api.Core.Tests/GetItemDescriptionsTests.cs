@@ -33,7 +33,7 @@ namespace Gw2Api.Core.Tests
             var expectedCount = this.testParams.Count;
 
             var actual = this.SystemUnderTest.HandleRequest(this.testParams);
-            
+
             Assert.Equal(expectedCount, actual.Count);
 
             var json = JsonConvert.SerializeObject(actual);

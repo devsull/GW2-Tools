@@ -58,8 +58,8 @@ namespace Gw2Api.Core.Tests
         {
             var info = this.SystemUnderTest.HandleRequest(this.testKey, this.characterName);
 
-            Assert.NotNull(info.Birthday);
-            Assert.NotNull(info.Name);
+            Assert.NotNull(info.Data.Birthday);
+            Assert.NotNull(info.Data.Name);
 
             var json = JsonConvert.SerializeObject(info);
 

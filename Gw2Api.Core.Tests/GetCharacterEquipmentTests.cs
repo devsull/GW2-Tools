@@ -28,8 +28,8 @@ namespace Gw2Api.Core.Tests
             var characterEquipment = this.SystemUnderTest.HandleRequest(this.testKey, this.characterName);
             
             Assert.NotNull(characterEquipment);
-            Assert.NotEmpty(characterEquipment.Equipment);
-            Assert.True(characterEquipment.Equipment.Count > 1, $"I dont believe that you have one equipped item on {this.characterName}!");
+            Assert.NotEmpty(characterEquipment.Data.Equipment);
+            Assert.True(characterEquipment.Data.Equipment.Count > 1, $"I dont believe that you have one equipped item on {this.characterName}!");
             
             var json = JsonConvert.SerializeObject(characterEquipment);
 

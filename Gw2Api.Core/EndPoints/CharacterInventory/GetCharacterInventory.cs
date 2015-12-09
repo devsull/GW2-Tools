@@ -10,7 +10,9 @@
 namespace Gw2Api.Core.EndPoints.CharacterInventory
 {
     using System.Collections.Generic;
-    using ApiEndPointDefinitions;
+
+    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
     using RestSharp;
     using ShortStack.Core;
@@ -38,25 +40,25 @@ namespace Gw2Api.Core.EndPoints.CharacterInventory
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The guild wars 2 API key.
+        ///     The guild wars 2 API key.
         /// </param>
         /// <param name="name">
-        /// The name.
+        ///     The name.
         /// </param>
         /// <returns>
         /// The <see cref="CharacterInventory"/>.
         /// </returns>
-        public CharacterInventory HandleRequest(string apiKey, string name)
+        public Gw2ApiResponse<CharacterInventory> HandleRequest(string apiKey, string name = null)
         {
             // add name to the resource list
             // we also must have inventory to the list because we want the inventory of the character!
             this.ApiResources = new List<string> { name, Gw2EndPointResources.Inventory };
 
-            var data = this.Execute(apiKey);
+            var response = this.Execute(apiKey);
+            
+            var mapped = Mapper.Map<Inventory, CharacterInventory>(response.Data);
 
-            var mapped = Mapper.Map<Inventory, CharacterInventory>(data);
-
-            return mapped;
+            return new Gw2ApiResponse<CharacterInventory> { Data = mapped, ErrorMessages = response.ErrorMessages };
         }
     }
 }

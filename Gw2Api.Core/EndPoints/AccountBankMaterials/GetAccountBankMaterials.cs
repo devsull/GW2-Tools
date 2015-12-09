@@ -11,7 +11,8 @@ namespace Gw2Api.Core.EndPoints.AccountBankMaterials
 {
     using System.Collections.Generic;
 
-    using ApiEndPointDefinitions;
+    using LookUpValues.EndPointDefinitions;
+
     using GW2ApiRawObjects;
 
     using RestSharp;
@@ -40,19 +41,27 @@ namespace Gw2Api.Core.EndPoints.AccountBankMaterials
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The guild wars 2 API key.
+        ///     The guild wars 2 API key.
         /// </param>
         /// <param name="resourceEndPoint">
-        /// The resource end point.
+        ///     The resource end point.
         /// </param>
         /// <returns>
         /// The <see cref="AccountBankMaterials"/>.
         /// </returns>
-        public AccountBankMaterials HandleRequest(string apiKey, string resourceEndPoint = null)
+        public Gw2ApiResponse<AccountBankMaterials> HandleRequest(string apiKey, string resourceEndPoint = null)
         {
-            var data = this.Execute(apiKey);
-            
-            return new AccountBankMaterials { Materials = data };
+            var response = this.Execute(apiKey);
+
+            return new Gw2ApiResponse<AccountBankMaterials>
+                       {
+                           Data =
+                               new AccountBankMaterials
+                                   {
+                                       Materials = response.Data
+                                   },
+                           ErrorMessages = response.ErrorMessages
+                       };
         }
     }
 }

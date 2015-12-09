@@ -21,14 +21,14 @@ namespace Gw2Api.Core.EndPoints
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        /// The guild wars 2 API key.
+        ///     The guild wars 2 API key.
         /// </param>
         /// <param name="resourceEndPoint">
-        /// Optional resource end point.
+        ///     Optional resource end point.
         /// </param>
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        T HandleRequest(string apiKey, string resourceEndPoint = null);
+        Gw2ApiResponse<T> HandleRequest(string apiKey, string resourceEndPoint = null);
     }
 }

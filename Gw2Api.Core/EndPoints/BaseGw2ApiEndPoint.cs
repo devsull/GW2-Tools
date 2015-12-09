@@ -13,8 +13,18 @@ namespace Gw2Api.Core.EndPoints
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
     using System.Text;
+
+    using Gw2Api.Core.GW2ApiRawObjects;
+
+    using Newtonsoft.Json;
+
     using RestSharp;
+    using RestSharp.Deserializers;
+
+    using ShortStack.Core;
 
     /// <summary>
     /// Base class for implementing Gw2ApiEndPoints, to be used in conjunction with an interface of 
@@ -27,10 +37,10 @@ namespace Gw2Api.Core.EndPoints
     public abstract class BaseGw2ApiEndPoint<T> where T : new()
     {
         /// <summary>
-        /// Settings contains the API url and version.
+        /// The guild wars 2 API key query parameter name.
         /// </summary>
-        private readonly Settings settings;
-
+        private const string ApiKeyQueryParamName = "access_token";
+        
         /// <summary>
         /// The client we'll use to make the API calls.
         /// </summary>
@@ -63,59 +73,139 @@ namespace Gw2Api.Core.EndPoints
         /// </param>
         protected BaseGw2ApiEndPoint(Settings settings, RestClient restClient)
         {
-            this.settings = settings;
             this.restClient = restClient;
+
+            // configure our rest client for api
+            this.restClient.BaseUrl = BuildRootGw2ApiUri(settings);
         }
-        
+
         /// <summary>
         /// Executes the API call by building the request and returning the data from the request.
         /// </summary>
         /// <param name="apiKey">
-        /// Guild wars 2 API key, API calls with authorization will require this.
+        ///     Guild wars 2 API key, API calls with authorization will require this.
         /// </param>
         /// <returns>
-        /// The data from the response casted to type T
+        /// The data from the response cast to type T
         /// </returns>
-        protected T Execute(string apiKey = null)
+        protected Gw2ApiResponse<T> Execute(string apiKey = null)
         {
-            if (this.ApiEndPoint == null)
-            {
-                throw new ArgumentNullException(nameof(apiKey));
-            }
-
-            // start end point building
-            var endPointBuilder = new StringBuilder(this.ApiEndPoint);
+            var request = this.BuildGw2ApiRequest(apiKey);
             
-            // append any resources to the end point
-            foreach (var resourceString in this.ApiResources)
+            return this.HandleRequest(request);
+        }
+
+        private Gw2ApiResponse<T> HandleRequest(IRestRequest request)
+        {
+            var restClientResponse = this.restClient.Execute<T>(request);
+
+            var errorMessages = this.GetErrorMessagesInResponse(restClientResponse);
+            
+            var response = new Gw2ApiResponse<T> { ErrorMessages = errorMessages };
+
+            if (!response.ErrorMessages.Any())
             {
-                endPointBuilder.Append("/").Append(resourceString);
+                response.Data = restClientResponse.Data;
             }
 
-            // create request with built api end point
-            var request = new RestRequest(endPointBuilder.ToString());
+            return response;
+        }
 
+        private List<string> GetErrorMessagesInResponse(IRestResponse<T> restClientResponse)
+        {
+            var errorMessages = new List<string>();
+
+            if (restClientResponse.StatusCode == HttpStatusCode.OK || restClientResponse.StatusCode == HttpStatusCode.PartialContent)
+            {
+                return errorMessages;
+            }
+
+            // get rest client errors
+            if (!string.IsNullOrEmpty(restClientResponse.ErrorMessage))
+            {
+                errorMessages.Add(restClientResponse.ErrorMessage);
+            }
+
+            // get gw2 api errors
+            var message = JsonConvert.DeserializeObject<ErrorMessage>(restClientResponse.Content);
+            errorMessages.Add(message.Text);
+
+            return errorMessages;
+        }
+
+        /// <summary>
+        /// Build the root Guild Wars 2 API end point
+        /// </summary>
+        /// <returns>
+        /// The api end point with the base url and version of the GW2 API.
+        /// </returns>
+        private static Uri BuildRootGw2ApiUri(Settings settings)
+        {
+            var builder = new StringBuilder(settings.ApiRootUrl).Append("/").Append(settings.ApiVersion);
+
+            return new Uri(builder.ToString());
+        }
+        
+        /// <summary>
+        /// Build the request for getting information from the GW2 API.
+        /// </summary>
+        /// <param name="apiKey">
+        /// GW2 API key for authenticated requests.
+        /// </param>
+        /// <returns></returns>
+        private IRestRequest BuildGw2ApiRequest(string apiKey)
+        {
+            // create request with built api end point
+            var request = new RestRequest(this.BuildGw2ApiEndPoint());
+            
             // append access token if auth needed
             if (apiKey != null)
             {
-                request.AddParameter("access_token", apiKey);
+                request.AddParameter(ApiKeyQueryParamName, apiKey);
             }
-
+            
+            // append query params
             foreach (var apiQueryParam in this.ApiQueryParams)
             {
                 var values = string.Join(",", apiQueryParam.Value);
                 request.AddParameter(apiQueryParam.Key, values);
             }
 
-            // configure client for api
-            var builder = new StringBuilder(this.settings.ApiRootUrl).Append("/").Append(this.settings.ApiVersion);
-            this.restClient.BaseUrl = new Uri(builder.ToString());
+            return request;
+        }
 
-            // execute request on client
-            var response = this.restClient.Execute<T>(request);
-            
-            // return the data in response
-            return response.Data;
+        /// <summary>
+        /// Throws exceptions if the implemented end point is not sane.
+        /// </summary>
+        private void CheckEndPointSanity()
+        {
+            // all end points should be declared
+            if (this.ApiEndPoint == null)
+            {
+                throw new ArgumentNullException(nameof(this.ApiEndPoint));
+            }
+        }
+
+        /// <summary>
+        /// Build the guild wars 2 api end point for this base api request.
+        /// </summary>
+        /// <returns>
+        /// The built end point specified by the implementation.
+        /// </returns>
+        private string BuildGw2ApiEndPoint()
+        {
+            // Let's make sure that the gw2 api end point has been implemented correctly
+            this.CheckEndPointSanity();
+
+            var endPointBuilder = new StringBuilder(this.ApiEndPoint);
+
+            // append any resources to the end point
+            foreach (var resourceString in this.ApiResources)
+            {
+                endPointBuilder.Append("/").Append(resourceString);
+            }
+
+            return endPointBuilder.ToString();
         }
     }
 }

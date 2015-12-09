@@ -27,7 +27,7 @@ namespace Gw2Api.Core.Tests
             var info = this.SystemUnderTest.HandleRequest(this.testKey);
 
             // since im testing my bank, I know I dont only have one item in it....
-            Assert.True(info.Items.Count > 1, "I dont believe that you only have 1 item in your bank!");
+            Assert.True(info.Data.Items.Count > 1, "I dont believe that you only have 1 item in your bank!");
 
             var json = JsonConvert.SerializeObject(info);
 
