@@ -3,14 +3,14 @@ using ShortStack.Core.Testing;
 
 namespace Gw2Api.Core.Tests
 {
-    using EndPoints;
-    using EndPoints.AccountBank;
+    using Contracts;
+
     using Newtonsoft.Json;
     using Xunit.Abstractions;
 
     using Xunit;
 
-    public class GetAccountBankTests : BaseIntegrationTest<IGw2ApiAuthEndPoint<AccountBank>>
+    public class GetAccountBankTests : BaseIntegrationTest<IGetAccountBank>
     {
         private readonly ITestOutputHelper output;
         
@@ -27,7 +27,7 @@ namespace Gw2Api.Core.Tests
             var info = this.SystemUnderTest.HandleRequest(this.testKey);
 
             // since im testing my bank, I know I dont only have one item in it....
-            Assert.True(info.Data.Items.Count > 1, "I dont believe that you only have 1 item in your bank!");
+            Assert.True(info.Data.Count > 1, "I dont believe that you only have 1 item in your bank!");
 
             var json = JsonConvert.SerializeObject(info);
 

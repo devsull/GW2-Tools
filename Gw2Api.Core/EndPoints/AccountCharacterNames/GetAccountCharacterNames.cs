@@ -11,7 +11,7 @@ namespace Gw2Api.Core.EndPoints.AccountCharacterNames
 {
     using System.Collections.Generic;
 
-    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+    using LookUpValues.EndPointDefinitions;
 
     using RestSharp;
 

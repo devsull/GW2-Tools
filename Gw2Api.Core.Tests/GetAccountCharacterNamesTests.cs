@@ -3,7 +3,7 @@
 //   copy write
 // </copyright>
 // <summary>
-//   Defines the GetAccountCharacterNamesTests type.
+//   The get account character names tests.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

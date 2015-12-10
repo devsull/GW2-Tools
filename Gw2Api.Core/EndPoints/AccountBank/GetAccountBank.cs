@@ -11,16 +11,18 @@ namespace Gw2Api.Core.EndPoints.AccountBank
 {
     using System.Collections.Generic;
 
-    using Gw2Api.Core.LookUpValues.EndPointDefinitions;
+    using Contracts;
 
     using GW2ApiRawObjects;
+
+    using LookUpValues.EndPointDefinitions;
 
     using RestSharp;
 
     /// <summary>
     /// Gets all the items in an account's bank.
     /// </summary>
-    public class GetAccountBank : BaseGw2ApiEndPoint<List<InventoryItem>>, IGw2ApiAuthEndPoint<AccountBank>
+    public class GetAccountBank : BaseGw2ApiEndPoint<List<InventoryItem>>, IGetAccountBank
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAccountBank"/> class.
@@ -41,21 +43,19 @@ namespace Gw2Api.Core.EndPoints.AccountBank
         /// The handle request.
         /// </summary>
         /// <param name="apiKey">
-        ///     The api key.
+        /// The api key.
         /// </param>
         /// <param name="resourceEndPoint">
-        ///     The resource end point.
+        /// The resource end point.
         /// </param>
         /// <returns>
-        /// The <see cref="AccountBank"/>.
+        /// The list of inventory items in the account's bank
         /// </returns>
-        public Gw2ApiResponse<AccountBank> HandleRequest(string apiKey, string resourceEndPoint = null)
+        Gw2ApiResponse<List<InventoryItem>> IGw2ApiAuthEndPoint<List<InventoryItem>>.HandleRequest(string apiKey, string resourceEndPoint)
         {
             var response = this.Execute(apiKey);
 
-            var data = new AccountBank { Items = response.Data };
-
-            return new Gw2ApiResponse<AccountBank> { ErrorMessages = response.ErrorMessages, Data = data };
+            return response;
         }
     }
 }

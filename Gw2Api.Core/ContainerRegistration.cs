@@ -18,6 +18,7 @@ namespace Gw2Api.Core
     using EndPoints.CharacterInventory;
     using EndPoints.Items;
 
+    using Gw2Api.Core.Contracts;
     using Gw2Api.Core.EndPoints.AccountBankMaterials;
     using Gw2Api.Core.EndPoints.CharacterEquipment;
     using Gw2Api.Core.GW2ApiRawObjects;
@@ -39,7 +40,7 @@ namespace Gw2Api.Core
         {
             ShortStack.Container.RegisterSingleton<Settings>(() => new Settings());
             ShortStack.Container.RegisterSingleton<RestClient>(() => new RestClient());
-            ShortStack.Container.Register<IGw2ApiAuthEndPoint<AccountBank>, GetAccountBank>();
+            ShortStack.Container.Register<IGetAccountBank, GetAccountBank>();
 
             // auth end points
             ShortStack.Container.Register<IGw2ApiAuthEndPoint<AccountBankMaterials>, GetAccountBankMaterials>();

@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IGetAccountBank.cs" />
     <Compile Include="EndPoints\AccountBankMaterials\AccountBankMaterials.cs" />
     <Compile Include="EndPoints\AccountBankMaterials\GetAccountBankMaterials.cs" />
     <Compile Include="EndPoints\AccountBank\AccountBank.cs" />

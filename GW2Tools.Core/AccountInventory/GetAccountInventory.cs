@@ -12,6 +12,7 @@ namespace GW2Tools.Core.AccountInventory
     using System.Collections.Generic;
     using System.Linq;
 
+    using Gw2Api.Core.Contracts;
     using Gw2Api.Core.EndPoints;
     using Gw2Api.Core.EndPoints.AccountBank;
     using Gw2Api.Core.EndPoints.AccountBankMaterials;
@@ -44,7 +45,7 @@ namespace GW2Tools.Core.AccountInventory
         /// <summary>
         /// The get account bank end point.
         /// </summary>
-        private readonly IGw2ApiAuthEndPoint<AccountBank> getAccountBankEndPoint;
+        private readonly IGetAccountBank getAccountBankEndPoint;
 
         /// <summary>
         /// The get itemLocation descriptions end point.
@@ -88,7 +89,7 @@ namespace GW2Tools.Core.AccountInventory
             IValidateObjects<GetAccountInventoryRequest> validator,
             IGw2ApiAuthEndPoint<AccountCharacterNames> getAccountCharacterNamesEndPoint,
             IGw2ApiAuthEndPoint<CharacterInventory> getCharacterInventoryEndPoint,
-            IGw2ApiAuthEndPoint<AccountBank> getAccountBankEndPoint,
+            IGetAccountBank getAccountBankEndPoint,
             IGw2ApiEndPoint<List<ItemDescription>> getItemDescriptionsEndPoint,
             IGw2ApiAuthEndPoint<AccountBankMaterials> getAccountMaterialsEndPoint,
             IGw2ApiAuthEndPoint<CharacterEquipment> getEquippedItemsEndPoint)
@@ -130,7 +131,7 @@ namespace GW2Tools.Core.AccountInventory
             var bank = this.getAccountBankEndPoint.HandleRequest(apiKey);
 
             // insert bank into dictionary
-            foreach (var inventoryItem in bank.Data.Items)
+            foreach (var inventoryItem in bank.Data)
             {
                 this.PutInventoryItemInItemDictionary(inventoryItem, LocationType.Bank);
             }

@@ -21,12 +21,6 @@
 
         public GetAccountInventoryTests(ITestOutputHelper output)
         {
-            //ShortStack.BootStack(false);
-            //Gw2CoreContainerRegistration.Configure();
-            //var mappingConfig = new Gw2Api.Core.ObjectMappings();
-            //mappingConfig.Configure();
-            //var thisMappingConfig = new ObjectMappings();
-            //thisMappingConfig.Configure();
             this.output = output;
         }
 
